@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration form</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <!-- Gäste-Registrierung für das Semesterprojekt. Dieses Formular beinhaltet folgende Felder: 
+    E-Mail-Adresse, Anrede (select), Vorname, Nachname, Postleitzahl, Ort, Straße, Hausnummer-->
+        <!--form action="results.html" method="GET"-->
+        <div class="row col-12 col-s-12">
+            <div class="formgroup col-8 col-s-8">
+                <h1 >User registration</h1><br/>
+                <title>Please fill in your information:</title><br/><br/>
+                <div class = "input-box">
+                    <label for="gender">Gender</label>
+                    <select name = "gender" id="gender">
+                        <option value="female">female</option>
+                        <option value="male">male</option>
+                        <option value="nonBinary">non-binary</option>
+                    </select>
+                </div>
+                <div class = "input-box">
+                    <label for="fistname">First name</label>
+                    <input name="fistname" id="firstname" type="text" required/>
+                </div>
+                <div class = "input-box">
+                    <label for="lastname">Last name</label>
+                    <input name="lastname" id="lastname" type="text" required/>
+                </div>
+                <div class = "input-box">
+                    <label for="email">E-Mail address</label>
+                    <input name = "email" id="email" type="email" required/>
+                </div>
+                <div class = "input-box">
+                    <label for="postcode">Postcode</label>
+                    <input name = "postcode" id="postcode" type="text"/>
+                </div>
+                <div class = "input-box">
+                    <label for="city">City</label>
+                    <input name = "city" id="city" type="text"/>
+                </div>
+                <div class = "input-box">
+                    <label for="street">Street</label>
+                    <input name="street" id="street" type="text"/>
+                </div>
+                <div class = "input-box">
+                    <label for="houseNr">House-Nr.</label>
+                    <input name="houseNr" id="houseNr" type="text"/>
+                </div>
+                <button type="reset">Reset</button><br/><br/>
+                <button type="submit">Submit</button><br/>
+            </div>
+        </div>
+        </form>
+        <br/><br/>
+        <div class="bottom col-12 col-s-12">
+            <a href = "imprint.html">Imprint</a><br>
+            <a href="helpsite.html">Help</a>
+        </div>
+    
+</body>
+</html>

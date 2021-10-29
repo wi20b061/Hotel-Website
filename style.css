@@ -6,20 +6,22 @@
     font-family: 'Poppins', sans-serif;
 }
 
-h1{
-    background-color: whitesmoke;
-    text-align: center;
-    border-style: none none dashed none;
+
+/*Forms*/
+.row::after {
+    content: "";
+    clear: both;
 }
 
-h2{
-    color:teal;
+/*Helpsite*/
+.helpgroup{
+    background-color: white;
+    color:rgb(1, 87, 87);
+    margin: auto;
 }
 
-button{
-    background-color: rgb(66, 141, 141);
-}
-
+/*momentan nicht in Verwendung, aber Idee für später als Index etc.*/
+/*Für später: background: linear-gradient(45deg,rgb(173, 122, 45), rgb(112, 240, 212));*/
 .bottom{
     text-align: center;
     margin-top: 30px;
@@ -37,35 +39,6 @@ button{
 }
 .bottom a:hover{
     color: rgb(52, 102, 85);
-}
-
-
-/*Forms*/
-
-.row::after {
-    content: "";
-    clear: both;
-}
-.formgroup{
-    color:rgb(1, 87, 87);
-    text-align: center;
-    background: linear-gradient(45deg,rgb(173, 122, 45), rgb(112, 240, 212));
-    float: left;
-    margin: 16,6667%
-}
-
-.formgroup.title{
-    color:linear-gradient(45deg,rgb(173, 122, 45), rgb(112, 240, 212));
-}
-.input-box{
-    padding-bottom: 10px;
-}
-
-/*Helpsite*/
-.helpgroup{
-    background-color: white;
-    color:rgb(1, 87, 87);
-    margin: auto;
 }
 
 

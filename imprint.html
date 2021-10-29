@@ -1,36 +1,3 @@
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imprint</title>
-    <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-    <h1 id = "heading-1">Imprint</h1>
-    <h2>Vienna City Hotel</h2>
-    <img src="hotel-image.jpg" alt="Hotel Building from outside" width="200">
-    <p>
-        Vienna City Hotel GmbH<br>
-        Dresdnerstrasse 85, A- 1200 Wien<br><br>
-        Tel.: +43 680 676 598<br>
-        Fax: +43 680 895 755<br>
-        E-Mail: vienna@cityhotel.com<br>
-        Web: www.vienna-cityhotel.com<br><br>
-        Commercial Register number: 325 854s<br>
-        Commercial Register Court: Gerichtsstand Wien<br>
-        Regulatory authority: Magistrat der Stadt Wien<br>
-        Membership: WKO, ÖHV<br>
-        UID: ATU12345678<br>
-    </p>
-    <div class="bottom col-12 col-s-12">
-        <a href="registration_form.html">Registration Form</a><br>
-        <a href="helpsite.html">Help</a>
-    </div>
-</body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,22 +15,30 @@
 </head>
 <body>
   <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #98c0dd;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="./registration_form.html">Registration</a>
+        </li>
         <li class="nav-item active">
-          <a class="nav-link" href="./imprint.html">Imprint <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="./imprint.html">Imprint<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="./helpsite.html">Help</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./registration_form.html">Registration</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Rooms
+          </a>
+          <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#";>Double Bedroom</a>
+            <a class="dropdown-item" href="#">Suite</a>
+            <a class="dropdown-item" href="#">Grand Suite</a>
+          </div>
         </li>
              
       </ul>
@@ -77,22 +52,26 @@
 
 <br>
     <div class="container text-center">
-    <h1 class="page-header">Imprint <br> <small> Vienna City Hotel </small></h1>
-
-    <img src="hotel-image.jpg" class="rounded mx-auto d-block" alt="Hotel Building from outside" width="200">
-        <p class="text-center">
-            Vienna City Hotel GmbH<br>
-            Dresdnerstrasse 85, A- 1200 Wien<br><br>
-            Tel.: +43 680 676 598<br>
-            Fax: +43 680 895 755<br>
-            E-Mail: vienna@cityhotel.com<br>
-            Web: www.vienna-cityhotel.com<br><br>
-            Commercial Register number: 325 854s<br>
-            Commercial Register Court: Gerichtsstand Wien<br>
-            Regulatory authority: Magistrat der Stadt Wien<br>
-            Membership: WKO, ÖHV<br>
-            UID: ATU12345678<br>
-      </p>
-    </div>
+      <div class="row">
+        <div class="col-sm-4 offset-4 border border-primary bg-light rounded">
+          <h1 class="page-header">Imprint <br> <small> Vienna City Hotel </small></h1>
+            <img src="hotel-image.jpg" class="rounded mx-auto d-block" alt="Hotel Building from outside" width="200">
+              <p class="text-center">
+                  Vienna City Hotel GmbH<br>
+                  Dresdnerstrasse 85, A- 1200 Wien<br><br>
+                  Tel.: +43 680 676 598<br>
+                  Fax: +43 680 895 755<br>
+                  E-Mail: vienna@cityhotel.com<br>
+                  Web: www.vienna-cityhotel.com<br><br>
+                  Commercial Register number: 325 854s<br>
+                  Commercial Register Court: Gerichtsstand Wien<br>
+                  Regulatory authority: Magistrat der Stadt Wien<br>
+                  Membership: WKO, ÖHV<br>
+                  UID: ATU12345678<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    
    </body>
 </html>

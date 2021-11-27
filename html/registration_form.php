@@ -39,10 +39,9 @@
   if (!isset($state)) {
     $state = "";
   }
-  $firstnameErr = $lastnameErr = $emailErr = $genderErr = $passwordErr = $lastnameErr = $adressErr= $adressErr2 = $cityErr = $zipErr = $stateErr= "";
+ // $firstnameErr = $lastnameErr = $emailErr = $genderErr = $passwordErr = $lastnameErr = $adressErr= $adressErr2 = $cityErr = $zipErr = $stateErr= "";
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,8 +62,7 @@
   <body>
     <!--Navbar-->
 
-    
-      <?php
+          <?php
         include 'nav.php';
       ?>
 
@@ -83,11 +81,6 @@
 
         <form class="ms-5 me-5 ps-5 pe-5" method="post" action="validation.php"> <!--Meldungen "is required" werden nicht angezeigt...-->
         
-
-
-        
-<!--hier verstehe ich nicht, warum Placeholder ist anders und hintergrund ist gelb/gleich bei password-->
-
         <label for="email" class="form-label">E-Mail </label>
                 <input class="form-control" 
                 type="email" 
@@ -104,6 +97,7 @@
                <input 
                type="password" 
                class="form-control"
+               name="password"
                id="password" 
                placeholder="Password"
                value="<?php echo htmlspecialchars($password)?>">
@@ -112,8 +106,9 @@
                 <?php } ?>
          
                     <label for="gender">Gender</label>
-                    <span class="error">* <?php echo $genderErr;?></span>
+                   <!-- <span class="error">* <?php echo $genderErr;?></span>-->
                     <select id="gender" 
+                            name="gender"
                             class="form-control"
                             value ="<?php echo htmlspecialchars($gender)?>">
                                 <?php if(isset($genderErr)){ ?>
@@ -127,7 +122,7 @@
                     </select>
              
                     <label for="fistname">First Name</label>
-                    <span class="error">* <?php echo $firstnameErr;?></span>
+                   <!-- <span class="error">* <?php echo $firstnameErr;?></span>-->
                     <input  
                             type="text" 
                             class="form-control" 
@@ -141,11 +136,12 @@
                 <?php } ?>
               
                     <label for="lastname">Last Name</label>
-                    <span class="error">* <?php echo $lastnameErr;?></span>
+                   
                     <input  
                             type="text" 
                             class="form-control"
                             id="lastname" 
+                            name="lastname"
                             placeholder="Doe"
                             value="<?php echo htmlspecialchars($lastname)?>">
                                 <?php if(isset($lastnameErr)){ ?>
@@ -154,23 +150,25 @@
                  
               
                   <label for="adress">Address</label>
-                  <span class="error">* <?php echo $adressErr;?></span>
+                 
                   <input 
                       type="text" 
                       class="form-control"  
-                      id="address" 
+                      id="adress" 
+                      name="adress"
                       placeholder="1234 Main St"
                       value ="<?php echo htmlspecialchars($adress)?>">
                                 <?php if(isset($adressErr)){ ?>
                     <p class="text-danger"><?php echo $adressErr; ?></p>
                 <?php } ?>
                       
-                  <label for="address2">Address details</label>
-                  <span class="error">* <?php echo $adressErr2;?></span>
+                  <label for="adress2">Address details</label>
+                  
                   <input 
                       type="text" 
                       class="form-control"
-                      id="address2" 
+                      id="adress2" 
+                      name="adress2"
                       placeholder="Apartment, studio"
                       value="<?php echo htmlspecialchars($adress2)?>">
                                 <?php if(isset($adressErr2)){ ?>
@@ -178,7 +176,7 @@
                 <?php } ?>
               
                       <label for="state">State</label>
-                      <select id="state" class="form-control">
+                      <select id="state" class="form-control" name="state">
                         <option selected>Choose...</option>
                         <option>Germany</option>
                         <option>Sweden</option>
@@ -210,11 +208,12 @@
                     <div class="col-8">
                     
                     <label for="city">City</label>
-                    <span class="error">* <?php echo $cityErr;?></span>
+                   
                     <input 
                       type="text" 
                       class="form-control" 
                       id="city"
+                      name="city"
                       placeholder="Vienna">
                    </div>
 

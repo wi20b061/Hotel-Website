@@ -45,5 +45,4 @@
    
   include('registration_form.php'); //um beim laden der validation seite, wieder das formular anzuzeigen anstatt einer leeren seite
 
-
 ?>

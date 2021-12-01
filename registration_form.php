@@ -1,125 +1,190 @@
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <title>Registration form</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<?php
+  session_start();
 
-    </head>
-    <body>
-        <?php
-          include '../nav.php';
-        ?>
-        <br>
+  $email=$password=$gender=$fname=$lname=$address=$city=$state=$zip=$rememberMe = "";
+  $emailErr=$passwordErr=$genderErr=$fnameErr=$lnameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
 
-        <!-- Gäste-Registrierung für das Semesterprojekt. Dieses Formular beinhaltet folgende Felder: 
-        E-Mail-Adresse, Anrede (select), Vorname, Nachname, Postleitzahl, Ort, Straße, Hausnummer-->
-            <!--form action="results.html" method="GET"-->
-            <br>
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(empty($_POST["email"])){
+      $emailErr = "Email is required";
+    }else{
+      $email = test_input($_POST["email"]);
+      if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+          $emailErr = "Invalid email format";
+      }
+    }
+    if(empty($_POST["password"])){
+      $passwordErr = "Password is required";
+    }else{
+      $password = test_input($_POST["password"]);
+    }
+    if(empty($_POST["gender"])){
+      $genderErr = "Gender is required";
+    }else{
+      $gender = test_input($_POST["gender"]);
+    }
+    if(empty($_POST["fname"])){
+      $fnameErr = "First name is required";
+    }else{
+      $fname = test_input($_POST["fname"]);
+      if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
+        $nameErr = "Only letters and whitespace allowed";
+    }
+    }
+    if(empty($_POST["lname"])){
+      $lnameErr = "Last name is required";
+    }else{
+      $lname = test_input($_POST["lname"]);
+      if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
+        $nameErr = "Only letters and whitespace allowed";
+    }
+    }
+    if(empty($_POST["address"])){
+      $addressErr = "";
+    }else{
+      $address = test_input($_POST["address"]);
+    }
+    if(empty($_POST["city"])){
+      $cityErr = "";
+    }else{
+      $city = test_input($_POST["city"]);
+    }
+    if(empty($_POST["state"])){
+      $stateErr = "";
+    }else{
+      $state = test_input($_POST["state"]);
+    }
+    if(empty($_POST["zip"])){
+      $zipErr = "";
+    }else{
+      $zip = test_input($_POST["zip"]);
+    }
+  }
 
-            <h1 class="page-header text-center">User registration</h1><br/>
-            <title>Please fill in your information:</title><br/><br/>
+  function test_input($data){
+    $data = trim($data); //unnötige leerzeichen etc entfernen
+    $data = stripslashes($data); //Backlashes entfernen vom unser input
+    $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
+    return $data;
+}
 
-            <div class="container">
-            <form>
-                <div class="form-group ">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Password</label>
-                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-group col-md-4">
-                        <label for="inputGender">Gender</label>
-                        <select id="inputGender" class="form-control">
-                          <option selected>Choose...</option>
-                          <option>Female</option>
-                          <option>Male</option>
-                          <option>Non-binary</option>
-                        </select>
-                    </div>
-        
-                    <div class="form-group col-md-6">
-                        <label for="fistname">First Name</label>
-                        <input type="text" class="form-control" id="firstname" placeholder="John">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="lastname">Last Name</label>
-                        <input type="text" class="form-control" id="lastname" placeholder="Doe">
-                    </div>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputAddress">Address</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="inputAddress2">Address details</label>
-                  <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control">
-                      <option selected>Choose...</option>
-                      <option>Germany</option>
-                      <option>Sweden</option>
-                      <option>Monaco</option>
-                      <option>Norway</option>
-                      <option>Denmark</option>
-                      <option>Finland</option>
-                      <option>Ukraine</option>
-                      <option>Luxemburg</option>
-                      <option>Niederland</option>
-                      <option>Czech Republic</option>
-                      <option>Portugal</option>
-                      <option>Switzerland</option>
-                      <option>Poland</option>
-                      <option>Spain</option>
-                      <option>France</option>
-                      <option>Italy</option>
-                      <option>Great Britain</option>
-                      <option>USA</option>
-                      <option>Australia</option>
-                      <option>Canada</option>
-                      <option>Russia</option>
-                      <option>Belarus</option>
-                      <option>China</option>
-                      <option>India</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="inputZip">
-                </div>
-                
-                <div class="form-group col-md-2">
-                  <div class="form-check ">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-primary">Reset</button>
-                </div>
-            </form>
+  include 'webstructure/head.php';
+?>
+    <title>Registration</title>
+  </head>
+  <body>
+    <?php
+      include 'webstructure/nav.php';
+    ?>
+    <br>
+
+    <!-- Gäste-Registrierung für das Semesterprojekt. Dieses Formular beinhaltet folgende Felder: 
+    E-Mail-Adresse, Anrede (select), Vorname, Nachname, Postleitzahl, Ort, Straße, Hausnummer-->
+    <!--form action="results.html" method="GET"-->
+    <br>
+
+    <h1 class="page-header text-center">User registration</h1><br/>
+    <div class="container">
+      <div class="space">
+          <span class="error">* required field</span>
+      </div>
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <div class="form-group">
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <span class="error">* <?php echo $emailErr;?></span>
+                <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value="<?php echo $email;?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Password</label>
+                <span class="error">* <?php echo $passwordErr;?></span>
+                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" value="<?php echo $password;?>">
+            </div>
         </div>
-        </div>
-    </body>
-    </html>
+        <div class="form-group">
+              <div class="form-group col-md-4">
+                  <label for="gender">Gender</label>
+                  <span class="error">* <?php echo $genderErr;?></span>
+                  <select id="gender" name="gender" class="form-control" value="<?php echo $gender;?>">
+                    <option selected>Choose...</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Non-binary</option>
+                  </select>
+              </div>
+  
+              <div class="form-group col-md-6">
+                  <label for="fname">First Name</label>
+                  <span class="error">* <?php echo $fnameErr;?></span>
+                  <input type="text" class="form-control" name="fname" id="fname" placeholder="John" value="<?php echo $fname;?>">
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="lname">Last Name</label>
+                  <span class="error">* <?php echo $lnameErr;?></span>
+                  <input type="text" class="form-control" name="lname" id="lname" placeholder="Doe" value="<?php echo $lname;?>">
+              </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" value="<?php echo $address;?>">
+          </div>
+          <div class="form-group col-md-6">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" id="city" value="<?php echo $city;?>">
+          </div>
+          <div class="form-group col-md-4">
+              <label for="state">State</label>
+              <select id="state" name="state" class="form-control" value="<?php echo $state;?>">
+                <option selected>Choose...</option>
+                <option>Germany</option>
+                <option>Sweden</option>
+                <option>Monaco</option>
+                <option>Norway</option>
+                <option>Denmark</option>
+                <option>Finland</option>
+                <option>Ukraine</option>
+                <option>Luxemburg</option>
+                <option>Niederland</option>
+                <option>Czech Republic</option>
+                <option>Portugal</option>
+                <option>Switzerland</option>
+                <option>Poland</option>
+                <option>Spain</option>
+                <option>France</option>
+                <option>Italy</option>
+                <option>Great Britain</option>
+                <option>USA</option>
+                <option>Australia</option>
+                <option>Canada</option>
+                <option>Russia</option>
+                <option>Belarus</option>
+                <option>China</option>
+                <option>India</option>
+              </select>
+          </div>
+          <div class="form-group col-md-2">
+              <label for="zip">Zip</label>
+              <input type="text" name="zip" class="form-control" id="zip" value="<?php echo $zip;?>">
+          </div>
+          
+          <div class="form-group col-md-2">
+            <div class="form-check ">
+              <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" <?php
+              if(isset($rememberMe) && $rememberMe=="true") echo "checked" ?>>
+              <label class="form-check-label" for="rememberMe">
+                Remember me
+              </label>
+            </div>
+          </div>
+          <div class="form-group col-md-2">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="reset" class="btn btn-primary">Reset</button>
+          </div>
+      </form>
+  </div>
+    </div>
+
+
+<?php
+  include 'webstructure/footer.php';
+?>

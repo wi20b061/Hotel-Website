@@ -28,6 +28,12 @@
                   Membership: WKO, ÖHV<br>
                   UID: ATU12345678<br>
             </p>
+            <h2> Hotelverwaltung </h2>
+              <h3> Nadiia Goncharenko </h3>
+              <img src="./nadiia.jpg" class="rounded mx-auto d-block" alt="Nadiia Goncharenko" width="200">
+              <br>
+              <h3> Fiona Kumhofer </h3>
+              <img src="./fiona.jpg" class="rounded mx-auto d-block" alt="Fiona Kumhofer" width="200">
           </div>
         </div>
       </div>

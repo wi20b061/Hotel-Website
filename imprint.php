@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-sm-4 offset-4 border border-primary bg-light rounded">
           <h1 class="page-header">Imprint <br> <small> Vienna City Hotel </small></h1>
-            <img src="../img/hotel-image.jpg" class="rounded mx-auto d-block" alt="Hotel Building from outside" width="200">
+            <img src="./img/hotel-image.jpg" class="rounded mx-auto d-block" alt="Hotel Building from outside" width="200">
               <p class="text-center">
                   Vienna City Hotel GmbH<br>
                   Dresdnerstrasse 85, A- 1200 Wien<br><br>
@@ -30,10 +30,10 @@
             </p>
             <h2> Hotelverwaltung </h2>
               <h3> Nadiia Goncharenko </h3>
-              <img src="./nadiia.jpg" class="rounded mx-auto d-block" alt="Nadiia Goncharenko" width="200">
+              <img src="./img/nadiia.jpg" class="rounded mx-auto d-block" alt="Nadiia Goncharenko" width="200">
               <br>
               <h3> Fiona Kumhofer </h3>
-              <img src="./fiona.jpg" class="rounded mx-auto d-block" alt="Fiona Kumhofer" width="200">
+              <img src="./img/fiona.jpg" class="rounded mx-auto d-block" alt="Fiona Kumhofer" width="200">
           </div>
         </div>
       </div>
@@ -41,3 +41,4 @@
 <?php
     include 'webstructure/footer.php';
 ?>
+

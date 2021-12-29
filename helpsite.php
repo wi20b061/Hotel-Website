@@ -10,13 +10,29 @@
     <br>
     <div class="container text-center">
     <h1 id = "heading-1">Help & Support </h1>
-    <h3>Tell our support team what you need:</h3>
+    <br><br>
+    <h3> User instructions </h3>
+        <br><br>
+        <p>
+        <a>If you have any problems - please go to the ticket page and fill in the form - or you can upload photos.<br><br>
+             Our Service Centre will process your request as soon as possible</a>
+            <br><br>
+        <a>if you wish to book a room . the Rooms tab will allow you to choose the option that suits you</a>
+            <br><br>
+        <a>At imprint you can find out more about our hotel</a><br>
+        </p>
+        <br><br>
+        <h3>Tell our support team what you need:</h3>
+        
     <p>
         <form class="helpgroup">
-            <label for="user-question">Your request:</label><br>
-            <textarea name="user-question" id= "user-question" cols="35" rows="10" placeholder="A problem with ..."></textarea><br>
+            <label for="user-question">Your request:</label>
+            <br>
+            <textarea name="user-question" id= "user-question" cols="35" rows="10" placeholder="A problem with ..."></textarea>
+            <br>
             <label for="file">Choose file (optional)</label>
-            <input name="file" id="file" type="file"><br><br>
+            <input name="file" id="file" type="file">
+            <br><br>
             <button type="submit">Send request</button>
         </form>
     </p>

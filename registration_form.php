@@ -87,8 +87,8 @@
                     <option>Mrs.</option>
                     <option>Mr.</option>
                     <option>Ms.</option>
-                    <option>Non-binary</option>
-                  </select>
+                    <option>Dr.</option>
+                    </select>
               </div>
   
               <div class="form-group col-md-6">

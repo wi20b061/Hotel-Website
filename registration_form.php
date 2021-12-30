@@ -43,7 +43,7 @@
       $lnameErr = "User name is required";
     }else{
       $uname = test_input($_POST["lname"]);
-      if(!preg_match("/^[a-zA-Z-' ]*$/",$uname)){ 
+      if(!preg_match("/^[0-9a-zA-Z-' ]*$/",$uname)){ 
         $unameErr = "Only letters and whitespace allowed";
     }
     }

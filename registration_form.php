@@ -40,11 +40,11 @@
     }
     }
      if(empty($_POST["uname"])){
-      $lnameErr = "User name is required";
+      $unameErr = "User name is required";
     }else{
-      $uname = test_input($_POST["lname"]);
+      $uname = test_input($_POST["uname"]);
       if(!preg_match("/^[0-9a-zA-Z-' ]*$/",$uname)){ 
-        $unameErr = "Only letters and whitespace allowed";
+        $unameErr = "Only numbers, letters and whitespace allowed";
     }
     }
   }

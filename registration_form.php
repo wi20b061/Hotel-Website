@@ -1,8 +1,8 @@
 <?php
   session_start();
 
-  $email=$password=$salutation=$fname=$lname=$uname=$rememberMe = "";
-  $emailErr=$passwordErr=$salutationErr=$fnameErr=$lnameErr=$unameErr=$rememberMeErr = "";
+  $email=$password=$salutation=$gender=$fname=$lname=$uname=$address=$city=$state=$zip=$rememberMe = "";
+  $emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
 
   if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($_POST["email"])){
@@ -19,9 +19,14 @@
       $password = test_input($_POST["password"]);
     }
     if(empty($_POST["salutation"])){
-      $salutationErr = "Salutaton is required";
+        $salutationErr = "Salutaton is required";
+      }else{
+        $salutation = test_input($_POST["salutation"]);
+      }
+    if(empty($_POST["gender"])){
+      $genderErr = "Gender is required";
     }else{
-      $salutation = test_input($_POST["salutation"]);
+      $gender = test_input($_POST["gender"]);
     }
     if(empty($_POST["fname"])){
       $fnameErr = "First name is required";
@@ -39,13 +44,33 @@
         $nameErr = "Only letters and whitespace allowed";
     }
     }
-     if(empty($_POST["uname"])){
-      $unameErr = "User name is required";
+    if(empty($_POST["uname"])){
+        $lnameErr = "User name is required";
+      }else{
+        $uname = test_input($_POST["lname"]);
+        if(!preg_match("/^[a-zA-Z-' ]*$/",$uname)){ 
+          $unameErr = "Only letters and whitespace allowed";
+      }
+      }
+    if(empty($_POST["address"])){
+      $addressErr = "";
     }else{
-      $uname = test_input($_POST["uname"]);
-      if(!preg_match("/^[0-9a-zA-Z-' ]*$/",$uname)){ 
-        $unameErr = "Only numbers, letters and whitespace allowed";
+      $address = test_input($_POST["address"]);
     }
+    if(empty($_POST["city"])){
+      $cityErr = "";
+    }else{
+      $city = test_input($_POST["city"]);
+    }
+    if(empty($_POST["state"])){
+      $stateErr = "";
+    }else{
+      $state = test_input($_POST["state"]);
+    }
+    if(empty($_POST["zip"])){
+      $zipErr = "";
+    }else{
+      $zip = test_input($_POST["zip"]);
     }
   }
 
@@ -77,9 +102,8 @@
           <span class="error">* required field</span>
       </div>
       <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-     
         <div class="form-group">
-              <div class="form-group col-md-4">
+        <div class="form-group col-md-4">
                   <label for="salutation">Salutation</label>
                   <span class="error">* <?php echo $salutationErr;?></span>
                   <select id="salutation" name="salutation" class="form-control" value="<?php echo $salutation;?>">
@@ -88,7 +112,29 @@
                     <option>Mr.</option>
                     <option>Ms.</option>
                     <option>Dr.</option>
-                    </select>
+                  </select>
+              </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <span class="error">* <?php echo $emailErr;?></span>
+                <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value="<?php echo $email;?>">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Password</label>
+                <span class="error">* <?php echo $passwordErr;?></span>
+                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" value="<?php echo $password;?>">
+            </div>
+        </div>
+        <div class="form-group">
+              <div class="form-group col-md-4">
+                  <label for="gender">Gender</label>
+                  <span class="error">* <?php echo $genderErr;?></span>
+                  <select id="gender" name="gender" class="form-control" value="<?php echo $gender;?>">
+                    <option selected>Choose...</option>
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Non-binary</option>
+                  </select>
               </div>
   
               <div class="form-group col-md-6">
@@ -106,18 +152,48 @@
             <label for="uname">Username</label>
             <input type="text" class="form-control" name="uname" id="uname" placeholder="Didi" value="<?php echo $uname;?>">
           </div>
-          <div class="form-group">
-            <div class="form-group col-md-6">
-                <label for="email">Email</label>
-                <span class="error">* <?php echo $emailErr;?></span>
-                <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value="<?php echo $email;?>">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Password</label>
-                <span class="error">* <?php echo $passwordErr;?></span>
-                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" value="<?php echo $password;?>">
-            </div>
-        </div>
+          <div class="form-group col-md-6">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" value="<?php echo $address;?>">
+          </div>
+          <div class="form-group col-md-6">
+              <label for="city">City</label>
+              <input type="text" class="form-control" name="city" id="city" value="<?php echo $city;?>">
+          </div>
+          <div class="form-group col-md-4">
+              <label for="state">State</label>
+              <select id="state" name="state" class="form-control" value="<?php echo $state;?>">
+                <option selected>Choose...</option>
+                <option>Germany</option>
+                <option>Sweden</option>
+                <option>Monaco</option>
+                <option>Norway</option>
+                <option>Denmark</option>
+                <option>Finland</option>
+                <option>Ukraine</option>
+                <option>Luxemburg</option>
+                <option>Niederland</option>
+                <option>Czech Republic</option>
+                <option>Portugal</option>
+                <option>Switzerland</option>
+                <option>Poland</option>
+                <option>Spain</option>
+                <option>France</option>
+                <option>Italy</option>
+                <option>Great Britain</option>
+                <option>USA</option>
+                <option>Australia</option>
+                <option>Canada</option>
+                <option>Russia</option>
+                <option>Belarus</option>
+                <option>China</option>
+                <option>India</option>
+              </select>
+          </div>
+          <div class="form-group col-md-2">
+              <label for="zip">Zip</label>
+              <input type="text" name="zip" class="form-control" id="zip" value="<?php echo $zip;?>">
+          </div>
           
           <div class="form-group col-md-2">
             <div class="form-check ">

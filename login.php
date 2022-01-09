@@ -8,26 +8,26 @@
     if(isset($_GET['logout']) && $_GET['logout'] == 'true'){
         unset($_SESSION['username']);
         $_SESSION["loggedin"] = false;
-        header('Location: /Semesterprojekt_Hotel_WEB/login.php');
+        header('Location: /Hotel/Hotel-Website-develop/login.php');
         die();
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'
-    && isset($_POST["email"])
+    && isset($_POST["username"])
     && isset($_POST["password"]))
     {
-        if($_POST["email"] == "admin@email"
+        if($_POST["username"] == "admin"
         && $_POST["password"] == "1234"){
                 $_SESSION["username"] = "admin";
                 $_SESSION["loggedin"] = true;
         }
-        elseif($_POST["email"] == "user1@email"
+        elseif($_POST["username"] == "user1"
         && $_POST["password"] == "1234"){
             $_SESSION["username"] = "user1";
             $_SESSION["loggedin"] = true;
         }
         else{
-            $loginErr = "Email or password is not correct";
+            $loginErr = "username or password is not correct";
         }
     }
 
@@ -45,8 +45,8 @@
             <h1 class="page-header">Login</h1>
             <form method="post">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" class="form-control"><br>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control"><br>
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" class="form-control">
                 </div>

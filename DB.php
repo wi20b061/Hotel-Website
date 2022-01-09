@@ -74,7 +74,7 @@ class DB
         $passwort = $user->getPasswort();
         $email = $user->getEmail();
        
-        $sql = "update benutzer set Salutation = ?, Fname = ?, Lname = ?, Uname = ?, Passwort = ?, Email = ? where ID = ?";
+        $sql = "update user set Salutation = ?, Fname = ?, Lname = ?, Uname = ?, Passwort = ?, Email = ? where ID = ?";
         $stmt = $this->connection->prepare($sql);
         $stmt->bind_param("ssssssi", $salutation, $fname, $lname,$uname, $passwort, $email, $id);
         $stmt->execute();
@@ -101,13 +101,42 @@ class DB
         $stmt->execute();
     }
 
+      function check_for_status() {
+        global $current_ticket;
+    
+        $ticket_statuses = $current_ticket->statuses;
+        $ticket_status = array_shift($ticket_statuses);
+    
+        if ($ticket_status == 'open'){
+            return ($ticket_status == 'open');
+        }
+
+        elseif ($ticket_status == 'closed.fail'){
+            return ($ticket_status == 'closed.fail');
+        }
+
+        elseif($ticket_status == 'closed.success'){
+            return ($ticket_status == 'closed.success');
+        }        
+    }
+
+ 
     function check_for_clients() {
         global $current_user;
     
         $user_roles = $current_user->roles;
         $user_role = array_shift($user_roles);
     
-        return ($user_role == 'client');
+        if ($user_role == 'guest'){
+            return ($user_role == 'guest');
+        }
+
+        elseif ($user_role == 'admin'){
+            return ($user_role == 'admin');
+        }
+        elseif ($user_role == 'tech'){
+            return ($user_role == 'tech');
+        }
     }
 
     function register_my_menus() {

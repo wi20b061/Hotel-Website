@@ -1,7 +1,7 @@
 <?php
 $host ="localhost";
-$user ="webtechhotel";
-$password= "Winter2021";
-$database = "webtechhotel";
+$user ="hotel";
+$password= "hotel";
+$database = "hotel";
 
 ?>

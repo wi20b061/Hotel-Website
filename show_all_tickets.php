@@ -8,7 +8,7 @@ include 'webstructure/head.php';
     include 'webstructure/nav.php';
   ?>
     <br>
-    <div class="container">
+    <div class="container text-center">
 
 
         require_once ('dbaccess.php');
@@ -25,7 +25,7 @@ include 'webstructure/head.php';
         $stmt->bind_result($ticketID, $file_path, $title, $comment, $userID);
     ?>
 
-    <h1>Tickets</h1>
+    <h1>All Tickets</h1>
     <table border="1">
         <th>Ticket ID</th>
         <th>User ID</th>

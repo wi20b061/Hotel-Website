@@ -43,11 +43,11 @@
 
                   
                     <?php   #admin =1      # Different Menu for different Userrole
-                     $_SESSION["userrole"] = 3; #simulation without DB
+                     $_SESSION["userrole"] = 2; #simulation without DB
                     
                  #   $_SESSION["userrole"] = userrole; #sollte mit DB funktionieren
 
-                 if($_SESSION["userrole"] = 1 ): ?> 
+                 if($_SESSION["userrole"] == 1 ): ?> 
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +64,7 @@
                     </li>
                    
                     <?php #tech=2
-                    elseif($_SESSION["userrole"] = 2 ): ?> 
+                    elseif($_SESSION["userrole"] == 2 ): ?> 
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -77,7 +77,7 @@
                     </li>
                    
                     <?php  #guest =3
-                    elseif($_SESSION["userrole"] = 3 ): ?>
+                    elseif($_SESSION["userrole"] == 3 ): ?>
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

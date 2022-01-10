@@ -41,8 +41,10 @@
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
             $target_dir = 'pics/';
-            $file = @$_FILES["picture"];
-            $picname = explode(".", @$_FILES["picture"]["name"]);
+            $file = $_FILES["picture"];
+            echo $file["name"];
+            $picname = explode(".", $_FILES["picture"]["name"]); //? wieso neues Array erstellen
+            echo $picname;
             $target_file = $target_dir . $picname[0] . "_". $timestamp . "." . end($picname);
             //$target_file = $target_dir . $timestamp . "_". basename(@$_FILES["picture"]["name"]);
             $uploadStatus = 1;

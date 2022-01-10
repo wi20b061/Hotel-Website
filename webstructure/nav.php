@@ -38,6 +38,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./registration_form.php">Registration</a>
                     </li>
+                    <!--create Ticket und newsPost noch ohne anzeigerechte-->
+                    <li class="nav-item">
+                        <a class="nav-link" href="./newsPost.php">Create news Post</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./create_ticket.php">Create Ticket</a>
+                    </li>
                     <?php endif ?>
                     <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]):?>
                         <li class="nav-item">

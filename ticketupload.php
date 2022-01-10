@@ -1,64 +1,40 @@
 <?php
+
+ $uploadDir = "upload/upload_tickets/";
+
+if(!file_exists($uploadDir)) {  //create upload directory if it doesnt exist
+    mkdir($uploadDir);
+}
+$thumbnailDir = "upload/Thumbnail_tickets_ordner/";  //create ordner for thumbnail img
+
+if(!file_exists($thumbnailDir)) {
+  mkdir($thumbnailDir);
+}
+
+ 
+    include 'uploads/upload.php';
+    
     include 'webstructure/head.php';
 ?>
-  <title>Create Ticket</title>
-</head>
-<body>
-      
-  <?php
-    include 'webstructure/nav.php';
-  ?>
- 
- <br>
 
- <div class="container text-center">
-     <h1 id = "heading-1">Tickets upload </h1>
-</div>
-<br>
-<div class="container">
-
-    <form action="" id="ticketform" method="POST" enctype="multipart/form-data">
-    <div class="col">
-            <textarea rows="1" cols="20" name="title" form="ticketform" class="form-control" id="title" placeholder="Title"></textarea>
-        </div>
-        <div class="col">
-            <textarea rows="4" cols="50" name="comment" form="ticketform" class="form-control" id="comment" placeholder="Comment"></textarea>
-        </div>
-        <div class="col">
-            <div class="input-group">
-                <div class="custom-file">
-                        <input class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" type="file" name="picture" required accept="image/jpeg, image/png, image/gif">
-                        <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                </div>
-                <button class="btn btn-outline-secondary" id="inputGroupFileAddon04" type="submit" name="submit">Upload</button>
-                </form>
-            </div>
-
-        <?php
-            $uid = 2; // get it from the $_SESSION
-            $title = "empty";
+<?php
+            $uid = 5; // get it from the $_SESSION
             $comment = "empty";
             $date = new DateTime();
             $timestamp = $date->getTimestamp();
-            $target_dir = 'pics/';
-            $file = $_FILES["picture"];
-            echo $file["name"];
-            $picname = explode(".", $_FILES["picture"]["name"]); //? wieso neues Array erstellen
-            echo $picname;
+            $target_dir = 'upload/upload_tickets/';
+           
+            $file = @$_FILES["picture"];
+            $picname = explode(".", @$_FILES["picture"]["name"]);
             $target_file = $target_dir . $picname[0] . "_". $timestamp . "." . end($picname);
             //$target_file = $target_dir . $timestamp . "_". basename(@$_FILES["picture"]["name"]);
             $uploadStatus = 1;
             $acceptedtype = ["jpg", "jpeg", "png", "gif"];
 
             if (isset($_POST["submit"])) {
-                if (isset($_POST["title"]) && !empty($_POST["title"])) {
-                    $title = $_POST["title"];
-                }
                 if (isset($_POST["comment"]) && !empty($_POST["comment"])) {
                     $comment = $_POST["comment"];
                 }
-               
-                  
 
                 // Check type
                 $uploadExt = strtolower(pathinfo($_FILES['picture']['name'], PATHINFO_EXTENSION));
@@ -119,9 +95,49 @@
             }
 
         ?>
+
+
+<title>Tickets</title>
+</head>
+<body>
+    <?php
+        include 'webstructure/nav.php';
+    ?>
+
+    <div class="container text-center">
+      <h1>Create a news ticket</h1>
+
+
+<!--für ein fileupload enctype!!!-->
+  <form method="post" enctype="multipart/form-data" >
+         <div class="col">
+                    <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title"></textarea>
+                </div>
+         <div class="col">
+                    <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text"></textarea>
+         </div>
+         <br>
+
+
+    <div class="col">
+      <!--für 1Fileupload - input type file-->
+      <label for="file">Files Upload</label>
+      <!--wir benötigen einen name in diesem file is es "file" undimt können wir am 
+      server zugreifen $_FILES["file"]-->
+      <!--mit accept können wir abstimmen welche file types erlaubt sind-->
+     
+      <input class="form-control" type="file" accept="image/jpeg"  id="file" name="file">
+     
+      <br>
+      <!--button or input type ="submit"damit formular wird abgesendet-->
+     
+      <input type="submit" class="btn btn-outline-secondary" value="Upload">
+
     </div>
-</div>
+    </div>
+  </form>
+
+
+
 </body>
-<?php
-    include 'webstructure/footer.php';
-?>
+</html>

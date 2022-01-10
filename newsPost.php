@@ -1,6 +1,5 @@
 <?php
-
-    $uploadDir = "upload/";
+    $uploadDir = "uploads/";
 
     if(!file_exists($uploadDir)) {  //create upload directory if it doesnt exist
         mkdir($uploadDir);
@@ -12,7 +11,6 @@
 
     include 'uploads/upload.php';
 
-
     include 'webstructure/head.php';
 ?>
     <title>News</title>
@@ -23,7 +21,6 @@
     ?>
 
     <br>
-
     <div class="container text-center">
         <h1 id = "heading-1">Create a news post</h1>
     </div>
@@ -48,22 +45,36 @@
                 </div>
         </form>
                 <div class="col">
-                    <h2>Files</h2><br>
+                    <h3>Uploaded image for news post:</h3><br>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <?php
+                            if($errFileExists){
+                                echo '<p class="error">This picture already in the image folder!<br>Please try again.</p>';
+                            } else if($errFileSize){
+                                echo '<p class="error">This picture is too large!<br>Please try again.</p>'; 
+                            }else if($errFileFormat){
+                                echo '<p class="error">Only "jpg", "jpeg" and "png" are accepted!<br>Please try again.</p>'; 
+                            }else{
+                            $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+                            if(isset($thumbnail)){
+                                echo 'Name: ' .$fileName;
+                                echo '<img src="'.$thumbnail.'" alt="newsImage" style="width:480px;height:720px">';
+                            }
+                            /*This is for showing all thumbnails in the directory - not needed here
                             if(file_exists($thumbnailDir)){
                                 $files = scandir($thumbnailDir);
                                 array($files);
 
 
                                 for($i = 2; isset($files[$i]); $i++){
-                                    echo '<li class="list-group-item>' . $files[$i] . '</li>';
+                                    echo '<li class="list-group-item">' . $files[$i] . '</li>';
                                 }
                                 if(count($files) == 2){
                                     echo '<li class="list-group-item">No files...</li>';
                                 }
+                            }*/
                             }
                         ?>
                     </ul>

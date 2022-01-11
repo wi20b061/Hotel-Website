@@ -61,7 +61,7 @@
                                 echo "<td>" . $img . "</td>";                             
                                 echo "<td>" . $timestamp . "</td>";
                                 echo "<td>" . $statusID . "</td>";
-                                echo "<td><a href= 'ticket.php?id= " . $ticketID . " 'class='btn btn-primary'>Open</a></td>";
+                                echo "<td><a href= 'ticket.php?id= " . $ticketID . " 'class='btn btn-primary'>Details</a></td>";
                                 echo "<tr>";
 
                             }

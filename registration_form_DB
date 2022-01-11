@@ -10,7 +10,7 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
     
     #echo "<pre>". '$_POST ' . print_r($_POST, true)."</pre>";
 
-   # $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); //https://www.php.net/manual/de/function.password-hash.php
+    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); //https://www.php.net/manual/de/function.password-hash.php
     //to verify the output of password_hash() --> use password_verify //https://www.php.net/manual/de/function.password-verify.php
     //--> simple string comparison will not work!
     //$_POST["password"] = crypt ($_POST["password"], "xc14"); //https://www.php.net/manual/de/function.crypt.php

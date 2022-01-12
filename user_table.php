@@ -63,7 +63,7 @@
                                 echo "<td>" . $email . "</td>";
                                 echo "<td>" . $active . "</td>";
                                 echo "<td>" . $roleID . "</td>";
-                                echo "<td><a href= 'editData.php?id= " . $userID . " 'class='btn btn-primary'>Update</a></td>";
+                                echo "<td><a href= 'editData.php?userID= " . $userID . " 'class='btn btn-primary'>Update</a></td>";
                                 echo "<tr>";
 
                             }

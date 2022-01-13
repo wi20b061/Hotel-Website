@@ -5,13 +5,16 @@
         $errFileExists = $errFileFormat = $errFileSize = false;
         $uploadFile = $uploadDir . basename($_FILES['file']['name']);
         $imageFileType = strtolower(pathinfo($uploadFile,PATHINFO_EXTENSION));
+
         //Check: File already exists
         if(file_exists($uploadFile)){
             $errFileExists = true;
-        }//Check: File size (max. 15 MB)
+        }
+        //Check: File size (max. 15 MB)
         else if($_FILES['file']['size'] > 15000000){
             $errFileSize = true;
-        }//Check: File format (double check because already checked in html form)
+        }
+        //Check: File format (double check because already checked in html form)
         else if($imageFileType != "jpg"
         && $imageFileType != "jpeg"
         && $imageFileType != "png"){
@@ -52,13 +55,38 @@
             
             // Das Bild als 'simpletext.jpg' speichern
             
-            imagejpeg($thumb, $thumbnailDir."thumbnail-".$fileName);    
+            $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+            imagejpeg($thumb, $thumbnail);    
 
             // Den Speicher freigeben
             imagedestroy($thumb);
             //nachdem das file gespeichert worden ist, wollen wir wieder auf unsere fileUpload Seite mit dem 
             //upload formular zurück und zusätzlich geben wir in der ul noch aus dass das file erfolgreich hochgeladen wurde
-            // header("Location: fileUpload.php?uploadsucess");
+            //header("Location: newsPost.php?uploadsucess");
+
+            //Daten in die DB speichern:
+            //DB connection
+            $db_obj = new mysqli($host, $user, $password, $database);
+            if($db_obj->connect_error){
+                echo "connection failed!";
+                exit();
+            }
+            //Variablen mit Werten füllen
+            $testTitle = $_POST['title'];
+            $testText = $_POST['text'];
+            $testPfad = $thumbnail;
+            //SQL Statement
+            $sql = "INSERT INTO newspost (title, text, img) VALUES (?, ?, ?)";
+            //Prepare Statement
+            $stmt = $db_obj->prepare($sql);
+            
+            //Parameter übergeben
+            //$stmt->bind_param('sss', $_POST['title'], $_POST['text'], $thumbnail);
+            $stmt->bind_param('sss', $testTitle, $testText, $testPfad);
+            
+            //Statement ausführen
+            $stmt->execute();
+            
     
         }
     }

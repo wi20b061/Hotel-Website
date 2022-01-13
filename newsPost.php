@@ -1,10 +1,12 @@
 <?php
-    $uploadDir = "uploads/";
+    require_once "dbaccess.php";
+
+    $uploadDir = "uploads/tmp/";
 
     if(!file_exists($uploadDir)) {  //create upload directory if it doesnt exist
         mkdir($uploadDir);
     }
-    $thumbnailDir = "thumbnail/";  //create ordner for thumbnail img
+    $thumbnailDir = "uploads/news/";  //create ordner for thumbnail img
     if(!file_exists($thumbnailDir)) {
         mkdir($thumbnailDir);
     }
@@ -59,25 +61,25 @@
                         }else if($errFileFormat){
                             echo '<p class="error">Only "jpg", "jpeg" and "png" are accepted!<br>Please try again.</p>'; 
                         }else{
-                        $thumbnail = $thumbnailDir."thumbnail-".$fileName;
-                        if(isset($thumbnail)){
-                            echo 'Name: ' .$fileName;
-                            echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"'; //style="width:480px;height:720px">
-                            
-                        }
-                        /**IDEE**: man könnte alle anzeigen und dann eines auswählen können */
-                        /*This is for showing all thumbnails in the directory - not needed here
-                        if(file_exists($thumbnailDir)){
-                            $files = scandir($thumbnailDir);
-                            array($files);
+                            $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+                            if(isset($thumbnail)){
+                                echo 'Name: ' .$fileName;
+                                echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"'; //style="width:480px;height:720px">
+                                
+                            }
+                            /**IDEE**: man könnte alle anzeigen und dann eines auswählen können */
+                            //This is for showing all thumbnails in the directory
+                            if(file_exists($thumbnailDir)){
+                                $files = scandir($thumbnailDir);
+                                array($files);
 
-                            for($i = 2; isset($files[$i]); $i++){
-                                echo '<li class="list-group-item">' . $files[$i] . '</li>';
+                                for($i = 2; isset($files[$i]); $i++){
+                                    echo '<li class="list-group-item">' . $files[$i] . '</li>';
+                                }
+                                if(count($files) == 2){
+                                    echo '<li class="list-group-item">No files...</li>';
+                               }
                             }
-                            if(count($files) == 2){
-                                echo '<li class="list-group-item">No files...</li>';
-                            }
-                        }*/
                         }
                     }
                     ?>

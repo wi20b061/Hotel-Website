@@ -13,6 +13,7 @@
         echo "Collection failed!";
         exit();}
 
+        //update in DB
     if(isset($_POST["comment"]) && isset($_POST["ticketID"]) && !empty($_POST["ticketID"])
     && isset($_POST["statusID"]) && !empty($_POST["statusID"])) {
 
@@ -45,6 +46,7 @@
     die();
     }
 
+    //read from DB
     if (isset($_GET["ticketID"]) && !empty(["ticketID"])) {
 
 

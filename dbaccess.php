@@ -1,7 +1,6 @@
 <?php
-$host ="localhost";
-$user ="hotel";
-$password= "hotel";
-$database = "hotel";
-
+    $host ="localhost";
+    $user ="hotel";
+    $password= "hotel";
+    $database = "hotel";
 ?>

@@ -38,7 +38,72 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./registration_form.php">Registration</a>
                     </li>
+                   
                     <?php endif ?>
+
+                  
+                    <?php   #admin =1      # Different Menu for different Userrole
+                     $_SESSION["userrole"] = 3; #simulation without DB
+                    
+                 #   $_SESSION["userrole"] = userrole; #sollte mit DB funktionieren
+
+                 if($_SESSION["userrole"] == 1 ): ?> 
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            User Administration
+                        </a>
+                        <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="./u.php">Edit User Data</a>
+                            <a class="dropdown-item" href="./UserDataEdit.php">Show User Data</a>
+                            <a class="dropdown-item" href="./admin_reg_user.php">User registration</a>
+                            <a class="dropdown-item" href="./user_activation">User activation</a>
+                            <a class="dropdown-item" href="./user_table.php">List of all users</a>
+                            <a class="dropdown-item" href="./table.php">List of all tickets</a>
+                            
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            News Administration
+                        </a>
+                        <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="newspost.php">Create Newspost</a>
+                            <a class="dropdown-item" href="./news_table.php">List of all news posts</a>
+                            <a class="dropdown-item" href="./edit_newspost">Edit news posts</a>
+                        </div>
+                    </li>
+                   
+                    <?php #tech=2
+                    elseif($_SESSION["userrole"] == 2 ): ?> 
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Tickets
+                        </a>
+                        <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="./show_all_tickets.php">Show all Tickets</a>
+                            <a class="dropdown-item" href="#">Edit Tickets</a>
+                        </div>
+                    </li>
+                   
+                    <?php  #guest =3
+                    elseif($_SESSION["userrole"] == 3 ): ?>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My Cabinet
+                        </a>
+                        <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="./u.php">Edit User Data</a>
+                            <a class="dropdown-item" href="./ticketupload.php"> Create Ticket</a>
+                            <a class="dropdown-item" href="./all_tickets_user.php"> Your Tickets</a>
+                        </div>
+                    </li>
+
+                    <?php endif ?> 
+
                     <?php if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"]):?>
                         <li class="nav-item">
                             <a class="nav-link" href="./login.php">Logout</a>

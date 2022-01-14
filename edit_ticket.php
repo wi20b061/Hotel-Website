@@ -3,6 +3,8 @@
 
   $tstatusErr=$commentErr= "";
 
+  $status="";
+  $comment="";
 ?>
 
 <?php

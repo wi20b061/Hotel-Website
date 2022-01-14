@@ -35,8 +35,8 @@
 
             // Neue Größe berechnen 
             list($width, $height) = getimagesize($uploadFile);
-            $newwidth = 480;
-            $newheight = 720;
+            $newwidth = 720;
+            $newheight = 480;
             
             // Bild laden
             $thumb = imagecreatetruecolor($newwidth, $newheight); //creates background black
@@ -72,9 +72,9 @@
                 exit();
             }
             //Variablen mit Werten füllen
-            $testTitle = $_POST['title'];
-            $testText = $_POST['text'];
-            $testPfad = $thumbnail;
+            $title = $_POST['title'];
+            $text = $_POST['text'];
+            $path = $thumbnail;
             //SQL Statement
             $sql = "INSERT INTO newspost (title, text, img) VALUES (?, ?, ?)";
             //Prepare Statement
@@ -82,7 +82,7 @@
             
             //Parameter übergeben
             //$stmt->bind_param('sss', $_POST['title'], $_POST['text'], $thumbnail);
-            $stmt->bind_param('sss', $testTitle, $testText, $testPfad);
+            $stmt->bind_param('sss', $title, $text, $path);
             
             //Statement ausführen
             $stmt->execute();

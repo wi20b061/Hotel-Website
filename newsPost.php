@@ -13,6 +13,8 @@
 
     include 'uploads/upload.php';
 
+
+
     include 'webstructure/head.php';
 ?>
     <title>News</title>
@@ -29,12 +31,12 @@
     <br>
 
     <div class="container">
-        <form id="newspost" method="POST" enctype="multipart/form-data">
+        <form id="newspost" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="col">
-                <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title"></textarea>
+                <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title" required></textarea>
             </div>
             <div class="col">
-                <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text"></textarea>
+                <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text" required></textarea>
             </div>
             <div class="col">
                 <div class="input-group">
@@ -87,8 +89,6 @@
             </div>
         </div>
     </div>
-
-    <!--Daten in DB speichern-->
 
 <?php
     include 'webstructure/footer.php';

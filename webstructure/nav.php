@@ -58,7 +58,6 @@
                             <a class="dropdown-item" href="./admin_reg_user.php">User registration</a>
                             <a class="dropdown-item" href="./user_activation">User activation</a>
                             <a class="dropdown-item" href="./user_table.php">List of all users</a>
-                            <a class="dropdown-item" href="./table.php">List of all tickets</a>
                             
                         </div>
                     </li>
@@ -71,6 +70,7 @@
                             <a class="dropdown-item" href="newspost.php">Create Newspost</a>
                             <a class="dropdown-item" href="./news_table.php">List of all news posts</a>
                             <a class="dropdown-item" href="./edit_newspost">Edit news posts</a>
+                            <a class="dropdown-item" href="./table.php">List of all tickets</a>
                         </div>
                     </li>
                    

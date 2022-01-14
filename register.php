@@ -16,7 +16,7 @@ include 'webstructure/head.php';
       
       <br>
       <br>
-      <h2 class="page-header text-center"> Your registration is successful!</h2><br/>
+      <h2 class="page-header text-center"> It is a success</h2><br/>
          
       </p>
       </div>

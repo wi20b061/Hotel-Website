@@ -2,7 +2,8 @@
     if(session_status() == PHP_SESSION_NONE){
         session_start();
     }
-   
+    
+    
 ?>
 
 </head>
@@ -64,7 +65,7 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             News and Tickets
+                            News and Tickets
                         </a>
                         <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="newspost.php">Create Newspost</a>
@@ -76,17 +77,12 @@
                    
                     <?php #tech=2
                     elseif($_SESSION["userrole"] == 2 ): ?> 
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tickets
-                        </a>
-                        <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="./show_all_tickets.php">Show all Tickets</a>
-                            <a class="dropdown-item" href="#">Edit Tickets</a>
-                        </div>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="./table.php">Tickets</a>
                     </li>
                    
+                                     
                     <?php  #guest =3
                     elseif($_SESSION["userrole"] == 3 ): ?>
                     

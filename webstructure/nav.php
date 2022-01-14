@@ -2,8 +2,7 @@
     if(session_status() == PHP_SESSION_NONE){
         session_start();
     }
-    
-    include 'head.php';
+   
 ?>
 
 </head>
@@ -122,6 +121,4 @@
             </nav>
         </div>
 
-<?php
-    include 'footer.php';
-?>
+

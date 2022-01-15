@@ -20,6 +20,8 @@
 <body>
     <?php
         include 'webstructure/nav.php';
+
+        $id = $_SESSION['userID'];
     ?>
 
     <br>

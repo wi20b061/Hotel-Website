@@ -38,10 +38,10 @@
                         $stmt ->bind_result($ticketID, $title, $comment, $text, $img, 
                         $timestamp, $statusID);
 
-                       #  if (!$stmt->fetch()) {
+                         if (!$stmt->fetch()) {
                            # header("Location: table.php");
                            # die();
-                       # }
+                        }
                         ?>
 
                         <div class="class">

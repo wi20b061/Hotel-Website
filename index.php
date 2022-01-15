@@ -30,6 +30,7 @@
         echo "<pre>" . print_r($sortedArray, true) . "</pre>";*/
 
     ?>
+    <div style="background-image: url('uploads/background.jpg');">
     <!--Carousell mit schönen Bildern-->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -62,8 +63,8 @@
         </button>
     </div>
 
-    <div class="container">
-        <h1 class="text-center">News</h1>
+    <div class="news container">
+        <h1><span class="text-white">News</span></h1>
         <!--div class="card" style="width: 18rem;">
             <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
@@ -95,6 +96,7 @@
                 $stmt->close();
                 $db_obj->close();
             ?>
+    </div>
     </div>
     
     

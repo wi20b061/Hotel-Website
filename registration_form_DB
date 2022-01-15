@@ -1,5 +1,27 @@
 <?php
+
+$email=$password=$salutation=$gender=$fname=$lname=$username=$address=$city=$state=$zip=$rememberMe = "";
+$emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
+
+session_start();
+  
+  include 'webstructure/head.php';
+
 require_once ('dbaccess.php');
+
+$db_obj = new mysqli($host, $user, $password, $database);
+if ($db_obj->connect_error) {
+    echo "Collection failed!";
+    exit();
+
+}
+function test_input($data){
+        $data = trim($data); //unnötige leerzeichen etc entfernen
+        $data = stripslashes($data); //Backlashes entfernen vom unser input
+        $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
+        return $data;
+    }
+
 
 if(isset($_POST["username"]) && !empty($_POST["username"])
 && isset($_POST["salutation"]) && !empty($_POST["salutation"])
@@ -8,34 +30,64 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
     && isset($_POST["password"]) && !empty($_POST["password"])
     && isset($_POST["email"]) && !empty($_POST["email"])) {
     
-    #echo "<pre>". '$_POST ' . print_r($_POST, true)."</pre>";
-
-    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); //https://www.php.net/manual/de/function.password-hash.php
-    //to verify the output of password_hash() --> use password_verify //https://www.php.net/manual/de/function.password-verify.php
-    //--> simple string comparison will not work!
-    //$_POST["password"] = crypt ($_POST["password"], "xc14"); //https://www.php.net/manual/de/function.crypt.php
-
-    //https://www.php.net/manual/de/function.hash.php
-    //$_POST["password"] = hash('sha256', $_POST["password"]);
-    //$_POST["password"] = hash('sha512', $_POST["password"]);
-    //$_POST["password"] = hash('md5', $_POST["password"]); //MD5 is not save anymore!
-
-   # echo "<pre>". '$_POST ' . print_r($_POST, true)."</pre>";
+    
+        if(empty($_POST["email"])){
+          $emailErr = "Email is required";
+        }else{
+          $email = test_input($_POST["email"]);
+          if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+              $emailErr = "Invalid email format";
+          }
+        }
+        if(empty($_POST["password"])){
+          $passwordErr = "Password is required";
+        }else{
+          $password = test_input($_POST["password"]);
+        }
+        if(empty($_POST["salutation"])){
+            $salutationErr = "Salutaton is required";
+          }else{
+            $salutation = test_input($_POST["salutation"]);
+          }
+       
+        if(empty($_POST["fname"])){
+          $fnameErr = "First name is required";
+        }else{
+          $fname = test_input($_POST["fname"]);
+          if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
+            $nameErr = "Only letters and whitespace allowed";
+        }
+        }
+        if(empty($_POST["lname"])){
+          $lnameErr = "Last name is required";
+        }else{
+          $lname = test_input($_POST["lname"]);
+          if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
+            $nameErr = "Only letters and whitespace allowed";
+        }
+        }
+        if(empty($_POST["username"])){
+            $lnameErr = "User name is required";
+          }else{
+            $username = test_input($_POST["username"]);
+            if(!preg_match("/^[a-zA-Z-' ]*$/",$username)){ 
+              $unameErr = "Only letters and whitespace allowed";
+          }
+          }
+       
+    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
 
     $db_obj = new mysqli($host, $user, $password, $database);
 
-    //https://www.w3schools.com/php/php_mysql_prepared_statements.asp
-    //https://www.php.net/manual/de/mysqli-stmt.bind-param.php
-
     //question marks (?) are parameters used for later variables bindings. $sql is like a template
-    $sql = "INSERT INTO `user` (`username`, `password`, `email`, `fname`, `lname`,`salutation`) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname` ) VALUES (?, ?, ?, ?, ?, ?)";
 
     //use prepare function
     $stmt = $db_obj->prepare($sql);
 
-    //"s" stands for string (string datatype is expected) ... i for integer, d for double
+    
     //followed by the variables which will be bound to the parameters
-    $stmt-> bind_param("ssssss", $username, $password, $email, $lname, $fname, $salutation);
+    $stmt-> bind_param("ssssss", $salutation, $username, $password, $email, $lname, $fname, );
 
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -43,10 +95,9 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
     $salutation = $_POST["salutation"];
-    
 
-    //executes the statement
-    $stmt->execute();
+     //executes the statement
+        $stmt->execute();
     
     //, if successful --> echo
     #if ($stmt->execute()) {
@@ -63,73 +114,11 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
     $stmt->close();
     //close the connection
     $db_obj->close();
-    header('Refresh: 1; URL =register.php');
-}
-?>
-
-
-<?php
-  session_start();
-
-  $email=$password=$salutation=$gender=$fname=$lname=$username=$address=$city=$state=$zip=$rememberMe = "";
-  $emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
-
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["email"])){
-      $emailErr = "Email is required";
-    }else{
-      $email = test_input($_POST["email"]);
-      if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
-          $emailErr = "Invalid email format";
-      }
-    }
-    if(empty($_POST["password"])){
-      $passwordErr = "Password is required";
-    }else{
-      $password = test_input($_POST["password"]);
-    }
-    if(empty($_POST["salutation"])){
-        $salutationErr = "Salutaton is required";
-      }else{
-        $salutation = test_input($_POST["salutation"]);
-      }
-   
-    if(empty($_POST["fname"])){
-      $fnameErr = "First name is required";
-    }else{
-      $fname = test_input($_POST["fname"]);
-      if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
-        $nameErr = "Only letters and whitespace allowed";
-    }
-    }
-    if(empty($_POST["lname"])){
-      $lnameErr = "Last name is required";
-    }else{
-      $lname = test_input($_POST["lname"]);
-      if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
-        $nameErr = "Only letters and whitespace allowed";
-    }
-    }
-    if(empty($_POST["username"])){
-        $lnameErr = "User name is required";
-      }else{
-        $username = test_input($_POST["username"]);
-        if(!preg_match("/^[a-zA-Z-' ]*$/",$username)){ 
-          $unameErr = "Only letters and whitespace allowed";
-      }
-      }
-   
-  }
-
-  function test_input($data){
-    $data = trim($data); //unnötige leerzeichen etc entfernen
-    $data = stripslashes($data); //Backlashes entfernen vom unser input
-    $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
-    return $data;
+   # header('Refresh: 1; URL =register.php');
 }
 
-  include 'webstructure/head.php';
 ?>
+
     <title>Registration</title>
   </head>
   <body>
@@ -208,7 +197,6 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
       </form>
   </div>
     </div>
-
 
 <?php
   include 'webstructure/footer.php';

@@ -1,88 +1,125 @@
 <?php
-  session_start();
 
-  $email=$password=$salutation=$gender=$fname=$lname=$uname=$address=$city=$state=$zip=$rememberMe = "";
-  $emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
+$email=$password=$salutation=$gender=$fname=$lname=$username=$address=$city=$state=$zip=$rememberMe = "";
+$emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
 
-  if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["email"])){
-      $emailErr = "Email is required";
-    }else{
-      $email = test_input($_POST["email"]);
-      if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
-          $emailErr = "Invalid email format";
-      }
-    }
-    if(empty($_POST["password"])){
-      $passwordErr = "Password is required";
-    }else{
-      $password = test_input($_POST["password"]);
-    }
-    if(empty($_POST["salutation"])){
-        $salutationErr = "Salutaton is required";
-      }else{
-        $salutation = test_input($_POST["salutation"]);
-      }
-    if(empty($_POST["gender"])){
-      $genderErr = "Gender is required";
-    }else{
-      $gender = test_input($_POST["gender"]);
-    }
-    if(empty($_POST["fname"])){
-      $fnameErr = "First name is required";
-    }else{
-      $fname = test_input($_POST["fname"]);
-      if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
-        $nameErr = "Only letters and whitespace allowed";
-    }
-    }
-    if(empty($_POST["lname"])){
-      $lnameErr = "Last name is required";
-    }else{
-      $lname = test_input($_POST["lname"]);
-      if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
-        $nameErr = "Only letters and whitespace allowed";
-    }
-    }
-    if(empty($_POST["uname"])){
-        $lnameErr = "User name is required";
-      }else{
-        $uname = test_input($_POST["uname"]);
-        if(!preg_match("/^[a-zA-Z-' ]*$/",$uname)){ 
-          $unameErr = "Only letters and whitespace allowed";
-      }
-      }
-    if(empty($_POST["address"])){
-      $addressErr = "";
-    }else{
-      $address = test_input($_POST["address"]);
-    }
-    if(empty($_POST["city"])){
-      $cityErr = "";
-    }else{
-      $city = test_input($_POST["city"]);
-    }
-    if(empty($_POST["state"])){
-      $stateErr = "";
-    }else{
-      $state = test_input($_POST["state"]);
-    }
-    if(empty($_POST["zip"])){
-      $zipErr = "";
-    }else{
-      $zip = test_input($_POST["zip"]);
-    }
-  }
+session_start();
+  
+  include 'webstructure/head.php';
 
-  function test_input($data){
-    $data = trim($data); //unnötige leerzeichen etc entfernen
-    $data = stripslashes($data); //Backlashes entfernen vom unser input
-    $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
-    return $data;
+require_once ('dbaccess.php');
+
+$db_obj = new mysqli($host, $user, $password, $database);
+if ($db_obj->connect_error) {
+    echo "Collection failed!";
+    exit();
+
 }
 
-  include 'webstructure/head.php';
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+ # {
+ #   if(isset($_POST["username"]) && !empty($_POST["username"])
+ #   && isset($_POST["salutation"]) && !empty($_POST["salutation"])
+ #   && isset($_POST["fname"]) && !empty($_POST["fname"])
+ #   && isset($_POST["lname"]) && !empty($_POST["lname"])
+ #       && isset($_POST["password"]) && !empty($_POST["password"])
+ #       && isset($_POST["email"]) && !empty($_POST["email"])) 
+    
+      //validation
+    
+        if(empty($_POST["email"])){
+          $emailErr = "Email is required";
+        }else{
+          $email = test_input($_POST["email"]);
+          if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+              $emailErr = "Invalid email format";
+          }
+        }
+        if(empty($_POST["password"])){
+          $passwordErr = "Password is required";
+        }else{
+          $password = test_input($_POST["password"]);
+        }
+             
+        if(empty($_POST["fname"])){
+          $fnameErr = "First name is required";
+        }else{
+          $fname = test_input($_POST["fname"]);
+          if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
+            $nameErr = "Only letters and whitespace allowed";
+        }
+        }
+        if(empty($_POST["lname"])){
+          $lnameErr = "Last name is required";
+        }else{
+          $lname = test_input($_POST["lname"]);
+          if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
+            $nameErr = "Only letters and whitespace allowed";
+        }
+        }
+        if(empty($_POST["username"])){
+            $lnameErr = "User name is required";
+          }else{
+            $username = test_input($_POST["username"]);
+            if(!preg_match("/^[a-zA-Z-' ]*$/",$username)){ 
+              $unameErr = "Only letters and whitespace allowed";
+          }
+          }
+             
+
+    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
+
+    $db_obj = new mysqli($host, $user, $password, $database);
+
+    //question marks (?) are parameters used for later variables bindings. $sql is like a template
+    $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname` ) VALUES (?, ?, ?, ?, ?, ?)";
+
+    //use prepare function
+    $stmt = $db_obj->prepare($sql);
+
+    
+    //followed by the variables which will be bound to the parameters
+    $stmt-> bind_param("ssssss", $salutation, $username, $password, $email, $lname, $fname, );
+
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+    $email = $_POST["email"];
+    $fname = $_POST["fname"];
+    $lname = $_POST["lname"];
+    $salutation = $_POST["salutation"];
+
+     //executes the statement
+        $stmt->execute();
+    
+    //, if successful --> echo
+    #if ($stmt->execute()) {
+    #    echo "New user created";
+        //trigger forwarding to welcome-page, get-started tutorial,
+        //confimation email with username (but without chosen password!), etc.
+   # }
+    #else {
+    #    echo "Error";
+        //or specific error-page
+   # }
+
+    //close the statement
+    $stmt->close();
+    //close the connection
+    $db_obj->close();
+   # header('Refresh: 1; URL =register.php');
+
+    #}
+}
+function test_input($data){
+  $data = trim($data); //unnötige leerzeichen etc entfernen
+  $data = stripslashes($data); //Backlashes entfernen vom unser input
+  $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
+  return $data;
+}
+
 ?>
+
     <title>Registration</title>
   </head>
   <body>
@@ -92,7 +129,7 @@
     <br>
 
     <!-- Gäste-Registrierung für das Semesterprojekt. Dieses Formular beinhaltet folgende Felder: 
-    E-Mail-Adresse, Anrede (select), Vorname, Nachname, Postleitzahl, Ort, Straße, Hausnummer-->
+    E-Mail-Adresse, Anrede (select), Vorname, Nachname, Password, Username-->
     <!--form action="results.html" method="GET"-->
     <br>
 
@@ -105,7 +142,6 @@
         <div class="form-group">
         <div class="form-group col-md-4">
                   <label for="salutation">Salutation</label>
-                  <span class="error">* <?php echo $salutationErr;?></span>
                   <select id="salutation" name="salutation" class="form-control" value="<?php echo $salutation;?>">
                     <option selected>Choose...</option>
                     <option>Mrs.</option>
@@ -114,10 +150,12 @@
                     <option>Dr.</option>
                   </select>
               </div>
+
+
             <div class="form-group col-md-6">
                 <label for="email">Email</label>
                 <span class="error">* <?php echo $emailErr;?></span>
-                <input type="email" class="form-control" name="email" id="email" placeholder="example@mail.com" value="<?php echo $email;?>">
+                <input type="email" class="form-control" name="email" id="email" placeholder="example@email.com" value="<?php echo $email;?>">
             </div>
             <div class="form-group col-md-6">
                 <label for="inputPassword4">Password</label>
@@ -126,17 +164,7 @@
             </div>
         </div>
         <div class="form-group">
-              <div class="form-group col-md-4">
-                  <label for="gender">Gender</label>
-                  <span class="error">* <?php echo $genderErr;?></span>
-                  <select id="gender" name="gender" class="form-control" value="<?php echo $gender;?>">
-                    <option selected>Choose...</option>
-                    <option>Female</option>
-                    <option>Male</option>
-                    <option>Non-binary</option>
-                  </select>
-              </div>
-  
+                
               <div class="form-group col-md-6">
                   <label for="fname">First Name</label>
                   <span class="error">* <?php echo $fnameErr;?></span>
@@ -149,50 +177,8 @@
               </div>
           </div>
           <div class="form-group col-md-6">
-            <label for="uname">Username</label>
-            <input type="text" class="form-control" name="uname" id="uname" placeholder="Didi" value="<?php echo $uname;?>">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" value="<?php echo $address;?>">
-          </div>
-          <div class="form-group col-md-6">
-              <label for="city">City</label>
-              <input type="text" class="form-control" name="city" id="city" value="<?php echo $city;?>">
-          </div>
-          <div class="form-group col-md-4">
-              <label for="state">State</label>
-              <select id="state" name="state" class="form-control" value="<?php echo $state;?>">
-                <option selected>Choose...</option>
-                <option>Germany</option>
-                <option>Sweden</option>
-                <option>Monaco</option>
-                <option>Norway</option>
-                <option>Denmark</option>
-                <option>Finland</option>
-                <option>Ukraine</option>
-                <option>Luxemburg</option>
-                <option>Niederland</option>
-                <option>Czech Republic</option>
-                <option>Portugal</option>
-                <option>Switzerland</option>
-                <option>Poland</option>
-                <option>Spain</option>
-                <option>France</option>
-                <option>Italy</option>
-                <option>Great Britain</option>
-                <option>USA</option>
-                <option>Australia</option>
-                <option>Canada</option>
-                <option>Russia</option>
-                <option>Belarus</option>
-                <option>China</option>
-                <option>India</option>
-              </select>
-          </div>
-          <div class="form-group col-md-2">
-              <label for="zip">Zip</label>
-              <input type="text" name="zip" class="form-control" id="zip" value="<?php echo $zip;?>">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Didi" value="<?php echo $username;?>">
           </div>
           
           <div class="form-group col-md-2">
@@ -211,7 +197,6 @@
       </form>
   </div>
     </div>
-
 
 <?php
   include 'webstructure/footer.php';

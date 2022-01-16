@@ -1,6 +1,7 @@
 <?php
     include 'webstructure/head.php';
     include 'webstructure/nav.php';
+
 ?>
 
 </head>
@@ -31,6 +32,7 @@
                         ticket.timestamp,ticketstatus.tstatus FROM ticket 
                         INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID WHERE ticketID = ? ;";
 
+
                         $stmt = $db_obj->prepare($sql);
                         $stmt->bind_param('i',$ticketID);
 
@@ -38,7 +40,7 @@
                         $stmt ->bind_result($ticketID, $title, $comment, $text, $img, 
                         $timestamp, $statusID);
 
-                         if (!$stmt->fetch()) {
+                       if (!$stmt->fetch()) {
                            # header("Location: table.php");
                            # die();
                         }
@@ -46,21 +48,14 @@
 
                         <div class="class">
                             <div class="class-header">
-                                <?php echo $statusID; ?>
+                                <?php echo $statusID?>
                             </div>
-                            
+                            <img src="<?php echo $image ?>" class="card-img-top" alt="Ticket image">
                             <div class="card-body">
-                            <img src="<?php echo $img; ?>" class="card-img-top" alt="Ticket image">
-                                <h5 class="card-title"><?php echo $title; ?></h5>
-                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp; ?></h6>
+                                <h5 class="card-title"><?php echo $title ?></h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp ?></h6>
+                                <a href="edit_ticket.php" class="btn btn-primary">Edit</a>
                                 <a href="table.php" class="btn btn-primary">Overview</a>
-                                <?php #tech=2
-                                    if($_SESSION["userrole"] == 2 ): ?> 
-
-                                    <a href="edit_ticket.php?id= " . $ticketID . "  class="btn btn-primary">Edit</a>
-                                 
-                                    <?php endif ?> 
-
                             </div>
                             </div>
                         </div>
@@ -70,3 +65,6 @@
 
     </body>
 
+<?php
+    include 'webstructure/footer.php';
+?>

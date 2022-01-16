@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           }
         }
         if(empty($_POST["password"])){
-          $passwordErr = "Password is required";
+          $passwordErr = "Password is required. Minimum four letters = 1 character and 1 numerical value";
         }else{
           $password = test_input($_POST["password"]);
         }
@@ -67,8 +67,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           }
           }
              
-
-    $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
+        //verify the new password
+        if (!preg_match("/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\w\W]{4,}$/",$_POST["password"])) {
+          $passwordErr="Password is required. <br>
+            Minimum four letters = 1 character and 1 numerical value";
+        }else{ 
+          $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
+        }
+            
 
     $db_obj = new mysqli($host, $user, $password, $database);
 

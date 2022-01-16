@@ -7,7 +7,6 @@
   <?php
     include 'webstructure/nav.php';
   ?>
-<div style="background-image: url('uploads/background.jpg');">
     <br>
     <!--das mit dem offset funktioniert für mobile so nicht!-->
     <div class="container text-center col-sm-6 offset-3 border border-primary alert-secondary rounded"><br>
@@ -23,28 +22,16 @@
                 <br><br>
             <a>At imprint you can find out more about our hotel</a><br>
         </p>
-        <br><br>
-        <h3>Tell our support team what you need:</h3>
-        <p>
-        <form class="helpgroup alert-secondary">
-            <label for="user-question">Your request:</label>
-            <br>
-            <textarea name="user-question" id= "user-question" cols="35" rows="10" placeholder="A problem with ..."></textarea>
-            <br>
-            <label for="file">Choose file (optional)</label>
-            <input name="file" id="file" type="file">
-            <br><br>
-            <button type="submit">Send request</button>
-        </form>
-        </p>
+    
         <div>
-        <p>You can also contact us under:</p>
+            <p>You can also contact us under:</p>
         </div>
         <div>
             <p> hilfseite@kleinhotel.at </p>
         </div>
     </div>
-</div>
+    
+
 
 <?php
     include 'webstructure/footer.php';

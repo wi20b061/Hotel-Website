@@ -1,5 +1,10 @@
 <?php
 
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
+
     //wenn es nicht existiert
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file'])) {
         $errFileExists = $errFileFormat = $errFileSize = false;
@@ -75,15 +80,17 @@
             $title = $_POST['title'];
             $text = $_POST['text'];
             $path = $thumbnail;
+            
             //SQL Statement
-            $sql = "INSERT INTO ticket (title,  text, img) VALUES (?,  ?, ?)";
+            $sql = "INSERT INTO ticket (title,  text, img, creatorID) VALUES (?, ?, ?, ?) ";
             //Prepare Statement
             $stmt = $db_obj->prepare($sql);
             
             //Parameter übergeben
             //$stmt->bind_param('sss', $_POST['title'], $_POST['text'], $thumbnail);
-            $stmt->bind_param('sss', $title, $text, $path);
-            
+            $stmt->bind_param('ssss', $title, $text, $path, $_SESSION['userID']);
+
+
             //Statement ausführen
             $stmt->execute();
             

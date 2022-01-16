@@ -6,6 +6,7 @@
     
 ?>
 
+
     <div class="container-flex">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #98c0dd;">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +42,7 @@
 
                   
                     <?php   #admin =1      # Different Menu for different Userrole
-                     $_SESSION["userrole"] = 3; #simulation without DB
+                     $_SESSION["userrole"] = 2; #simulation without DB
                     
                  #   $_SESSION["userrole"] = userrole; #sollte mit DB funktionieren
 
@@ -52,7 +53,7 @@
                             User Administration
                         </a>
                         <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="./u.php">Edit User Data</a>
+                            <a class="dropdown-item" href="./editData.php">Edit User Data</a>
                             <a class="dropdown-item" href="./UserDataEdit.php">Show User Data</a>
                             <a class="dropdown-item" href="./admin_reg_user.php">User registration</a>
                             <a class="dropdown-item" href="./user_activation">User activation</a>
@@ -78,6 +79,10 @@
 
                     <li class="nav-item">
                         <a class="nav-link" href="./table.php">Tickets</a>
+                        </li>
+
+                        <li class="nav-item">
+                        <a class="nav-link" href="./editData.php">Edit User Data</a>
                     </li>
                    
                                      
@@ -89,7 +94,7 @@
                             My Cabinet
                         </a>
                         <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="./u.php">Edit User Data</a>
+                            <a class="dropdown-item" href="./editData.php">Edit User Data</a>
                             <a class="dropdown-item" href="./ticketupload.php"> Create Ticket</a>
                             <a class="dropdown-item" href="./all_tickets_user.php"> Your Tickets</a>
                         </div>

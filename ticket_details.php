@@ -50,7 +50,7 @@
                             <div class="class-header">
                                 <?php echo $statusID?>
                             </div>
-                            <img src="<?php echo $image ?>" class="card-img-top" alt="Ticket image">
+                            <img src="<?php echo $img ?>" class="card-img-top" alt="Ticket image">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp ?></h6>

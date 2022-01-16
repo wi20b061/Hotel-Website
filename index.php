@@ -16,7 +16,7 @@
             echo "Connection Error: " . $db_obj->connect_error;
             exit();
         }
-        $sql = "SELECT * from newsPost";
+        $sql = "SELECT * from newsPost ORDER BY timestamp DESC";
         $stmt = $db_obj->prepare($sql);
         $stmt->execute();
         $stmt->bind_result($newsPostID, $timestamp, $title, $text, $imgPath);
@@ -26,7 +26,9 @@
         echo "<pre>" . print_r($sortedArray, true) . "</pre>";*/
 
     ?>
-    <div style="background-image: url('uploads/background.jpg');">
+
+<!--Hintergrund Bild-->
+<div style="background-image: url('uploads/background.jpg');">
     <!--Carousell mit schönen Bildern-->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -59,6 +61,7 @@
         </button>
     </div>
 
+    <!--Newsposts Beiträge-->
     <div class="news container">
         <h1><span class="text-white">News</span></h1>
             <?php 
@@ -77,7 +80,7 @@
                 $db_obj->close();
             ?>
     </div>
-    </div>
+</div>
     
     
 <?php

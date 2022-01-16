@@ -37,7 +37,7 @@
                         <a class="nav-link" href="./create_ticket.php">Create Ticket</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./edit_newsposts.php">Create Ticket</a>
+                        <a class="nav-link" href="./edit_newspost.php">Edit Newspost</a>
                     </li>
                     <?php if(!isset($_SESSION["loggedin"])): ?>
                     <li class="nav-item">

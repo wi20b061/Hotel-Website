@@ -21,10 +21,6 @@
         $stmt->execute();
         $stmt->bind_result($newsPostID, $timestamp, $title, $text, $imgPath);
 
-        //echo "<pre>" . print_r($result->fetch_all(), true) . "</pre>";
-
-
-
         /*sort timestamps?
         $sortedArray = rsort($result);
         echo "<pre>" . print_r($sortedArray, true) . "</pre>";*/
@@ -65,21 +61,6 @@
 
     <div class="news container">
         <h1><span class="text-white">News</span></h1>
-        <!--div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-        </div>
-
-            <th>Post ID</th>
-            <th>Timestamp</th>
-            <th>Title</th>
-            <th>text</th>
-            <th>image Pfad</th-->
-
             <?php 
                 while($stmt->fetch()){
                     echo '<div class="row">';
@@ -92,7 +73,6 @@
                     echo '</div>';
                     echo '</div></div><br>';
                 }
-        
                 $stmt->close();
                 $db_obj->close();
             ?>

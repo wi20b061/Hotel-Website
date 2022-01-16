@@ -1,4 +1,7 @@
 <?php
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
     require_once "dbaccess.php";
 
     $uploadDir = "uploads/tmp/";
@@ -33,10 +36,10 @@
     <div class="container">
         <form id="newspost" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="col">
-                <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title" required></textarea>
+                <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title" value="<?php echo $title;?>" required></textarea>
             </div>
             <div class="col">
-                <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text" required></textarea>
+                <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text" value="<?php echo $text;?>" required></textarea>
             </div>
             <div class="col">
                 <div class="input-group">
@@ -50,10 +53,10 @@
         </form>
         <br>
         <br>
-        <div class="card"><!--style="width: 18rem;"-->
+        <h3 class="card-title">New upload:</h3><br>
+        <div class="card">
             <div class="col">
                 <div class="card-body">
-                    <h3 class="card-title">New uploaded image:</h3><br>
                     <?php
                     if(isset($errFileExists)){
                         if($errFileExists){
@@ -62,26 +65,25 @@
                             echo '<p class="error">This picture is too large!<br>Please try again.</p>'; 
                         }else if($errFileFormat){
                             echo '<p class="error">Only "jpg", "jpeg" and "png" are accepted!<br>Please try again.</p>'; 
-                        }else{
-                            $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+                        }else if($success){
+                            echo "<h5 class='card-title'>" . $title . "</h5>";
+                            echo '<p class="card-text">' . $text . '</p>';
                             if(isset($thumbnail)){
-                                echo 'Name: ' .$fileName;
-                                echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"'; //style="width:480px;height:720px">
-                                
+                                echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"';   
                             }
-                            /**IDEE**: man könnte alle anzeigen und dann eines auswählen können */
-                            //This is for showing all thumbnails in the directory
-                            if(file_exists($thumbnailDir)){
-                                $files = scandir($thumbnailDir);
-                                array($files);
+                        }
+                        //This is for showing all thumbnails in the directory
+                        if(file_exists($thumbnailDir) && !$success){
+                            echo "<strong>Picutres on the Server:</strong>";
+                            $files = scandir($thumbnailDir);
+                            array($files);
 
-                                for($i = 2; isset($files[$i]); $i++){
-                                    echo '<li class="list-group-item">' . $files[$i] . '</li>';
-                                }
-                                if(count($files) == 2){
-                                    echo '<li class="list-group-item">No files...</li>';
-                               }
+                            for($i = 2; isset($files[$i]); $i++){
+                                echo '<li class="list-group-item">' . $files[$i] . '</li>';
                             }
+                            if(count($files) == 2){
+                                echo '<li class="list-group-item">No files...</li>';
+                           }
                         }
                     }
                     ?>

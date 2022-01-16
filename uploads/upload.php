@@ -1,13 +1,22 @@
 <?php
 
+    $title = $text = $path = "";
+    $success = false;
+
     //wenn es nicht existiert
     if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file'])) {
         $errFileExists = $errFileFormat = $errFileSize = false;
         $uploadFile = $uploadDir . basename($_FILES['file']['name']);
         $imageFileType = strtolower(pathinfo($uploadFile,PATHINFO_EXTENSION));
 
+        $fileName = $_FILES['file']['name'];
+        $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+        //Variablen mit Werten füllen
+        $title = htmlspecialchars($_POST['title']);
+        $text = htmlspecialchars($_POST['text']);
+
         //Check: File already exists
-        if(file_exists($uploadFile)){
+        if(file_exists($thumbnail)){
             $errFileExists = true;
         }
         //Check: File size (max. 15 MB)
@@ -22,7 +31,7 @@
         }else{
             move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile);
             
-            $fileName = $_FILES['file']['name'];
+            //$fileName = $_FILES['file']['name'];
 
 
             //gibt es keine errors und passt die größe, dann erzeugen wir einen neuen filenamen, 
@@ -55,7 +64,7 @@
             
             // Das Bild als 'simpletext.jpg' speichern
             
-            $thumbnail = $thumbnailDir."thumbnail-".$fileName;
+            //$thumbnail = $thumbnailDir."thumbnail-".$fileName;
             imagejpeg($thumb, $thumbnail);    
 
             // Den Speicher freigeben
@@ -72,8 +81,8 @@
                 exit();
             }
             //Variablen mit Werten füllen
-            $title = $_POST['title'];
-            $text = $_POST['text'];
+            //$title = htmlspecialchars($_POST['title']);
+            //$text = htmlspecialchars($_POST['text']);
             $path = $thumbnail;
             //SQL Statement
             $sql = "INSERT INTO newspost (title, text, img) VALUES (?, ?, ?)";
@@ -86,8 +95,11 @@
             
             //Statement ausführen
             $stmt->execute();
-            
-    
+
+            if(file_exists($uploadFile)){
+                unlink($uploadFile);
+            }
+            $success= true;
         }
     }
 ?>

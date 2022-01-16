@@ -1,6 +1,7 @@
 <?php
-  session_start();
-
+  if(session_status() == PHP_SESSION_NONE){
+    session_start();
+  }
   $email=$password=$salutation=$gender=$fname=$lname=$uname=$address=$city=$state=$zip=$rememberMe = "";
   $emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
 

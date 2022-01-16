@@ -35,7 +35,7 @@
                         $stmt->bind_param('i',$ticketID);
 
                         $stmt->execute();
-                        $stmt ->bind_result($ticketID, $title, $comment, $text, $img, 
+                        $stmt ->bind_result($ticketID, $title, $comment, $text, $img,
                         $timestamp, $statusID);
 
                          if (!$stmt->fetch()) {

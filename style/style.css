@@ -12,6 +12,18 @@
     margin-bottom: 10px;
 }
 
+.center{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+.news{
+    margin-top: 3%;
+    margin-left: 14%;
+}
+.helpside{
+    margin-bottom: 100%;
+}
 
 /*Forms*/
 .row::after {

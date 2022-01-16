@@ -22,20 +22,12 @@
       $ticketID = intval($_POST['ticketID']);
 
       $statusID = intval($_POST['statusID']);
-      $sql = "UPDATE `ticket` SET `comment`=?, `statusID`= ?  WHERE `ticketID`=?";     #, `statusID`) VALUES (?, ?)";
+      $sql = "UPDATE `ticket` SET `comment`=?, `statusID`= ?  WHERE `ticketID`=?";     
 
       $comment = $_POST["comment"];
     //use prepare function
     $stmt = $db_obj->prepare($sql);
     $stmt->bind_param("sii", $comment, $statusID, $ticketID );
-
-    //"s" stands for string (string datatype is expected) ... i for integer, d for double
-    //followed by the variables which will be bound to the parameters
-
-    #$stmt-> bind_param("s", $comment); #, $statusID ); не забудь і
-
-    
-    #$statusID = $_POST["tstatus"];
    
     //executes the statement
     $stmt->execute();
@@ -51,11 +43,8 @@
     //read from DB
     if (isset($_GET["ticketID"]) && !empty(["ticketID"])) {
 
-
-    #$sql = "SELECT ticket.comment,     ticketstatus.tstatus FROM ticket
-    #     INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID;";
-    
-    $sql = "SELECT ticket.comment, ticketstatus.tstatus FROM ticket  INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID
+    $sql = "SELECT ticket.comment, ticketstatus.tstatus FROM ticket  
+    INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID
      WHERE ticket.ticketID = ? ;";
 
     $stmt = $db_obj->prepare($sql);

@@ -63,7 +63,6 @@
 
                                     if(isset($_GET['search']))
                                     {
-
                                         $filtervalues = "%" . $_GET['search'] . "%";
                                         
                                         $sql = "SELECT newspost.newsPostID, newspost.title, newspost.text, newspost.img, 

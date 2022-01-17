@@ -1,11 +1,13 @@
 <?php
 
-$email=$password=$salutation=$gender=$fname=$lname=$username=$address=$city=$state=$zip=$rememberMe = "";
-$emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
+  $email=$password=$salutation=$gender=$fname=$lname=$uname=$rememberMe = "";
+  $emailErr=$passwordErr=$genderErr=$fnameErr=$lnameErr=$unameErr= "";
 
-session_start();
+  if(session_status() == PHP_SESSION_NONE){
+    session_start();
+  }
   
-  include 'webstructure/head.php';
+  
 
 require_once ('dbaccess.php');
 
@@ -23,57 +25,60 @@ function test_input($data){
     }
 
 
-if(isset($_POST["username"]) && !empty($_POST["username"])
-&& isset($_POST["salutation"]) && !empty($_POST["salutation"])
-&& isset($_POST["fname"]) && !empty($_POST["fname"])
-&& isset($_POST["lname"]) && !empty($_POST["lname"])
-    && isset($_POST["password"]) && !empty($_POST["password"])
-    && isset($_POST["email"]) && !empty($_POST["email"])) {
-    
-    
-        if(empty($_POST["email"])){
-          $emailErr = "Email is required";
-        }else{
-          $email = test_input($_POST["email"]);
-          if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
-              $emailErr = "Invalid email format";
-          }
-        }
-        if(empty($_POST["password"])){
-          $passwordErr = "Password is required";
-        }else{
-          $password = test_input($_POST["password"]);
-        }
-        if(empty($_POST["salutation"])){
-            $salutationErr = "Salutaton is required";
-          }else{
-            $salutation = test_input($_POST["salutation"]);
-          }
+//if(isset($_POST["username"]) && isset($_POST["salutation"]) && isset($_POST["fname"]) && isset($_POST["lname"]) && isset($_POST["password"])&& isset($_POST["email"])) {
+  if($_SERVER["REQUEST_METHOD"] == "POST"){
        
-        if(empty($_POST["fname"])){
-          $fnameErr = "First name is required";
-        }else{
-          $fname = test_input($_POST["fname"]);
-          if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
-            $nameErr = "Only letters and whitespace allowed";
-        }
-        }
-        if(empty($_POST["lname"])){
-          $lnameErr = "Last name is required";
-        }else{
-          $lname = test_input($_POST["lname"]);
-          if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
-            $nameErr = "Only letters and whitespace allowed";
-        }
-        }
-        if(empty($_POST["username"])){
-            $lnameErr = "User name is required";
-          }else{
-            $username = test_input($_POST["username"]);
-            if(!preg_match("/^[a-zA-Z-' ]*$/",$username)){ 
-              $unameErr = "Only letters and whitespace allowed";
-          }
-          }
+    if(!empty($_POST["salutation"])){
+      $salutation = test_input($_POST["salutation"]);
+    }
+
+    if(empty($_POST["gender"])){
+      $genderErr = "Gender is required";
+    }else{
+      $gender = test_input($_POST["gender"]);
+    }
+
+    if(empty($_POST["fname"])){
+      $fnameErr = "First name is required";
+    }else{
+      $fname = test_input($_POST["fname"]);
+      if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
+        $nameErr = "Only letters and whitespace allowed";
+      }
+    }
+
+    if(empty($_POST["lname"])){
+      $lnameErr = "Last name is required";
+    }else{
+      $lname = test_input($_POST["lname"]);
+      if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
+        $nameErr = "Only letters and whitespace allowed";
+      }
+    }
+
+    if(empty($_POST["email"])){
+      $emailErr = "Email is required";
+    }else{
+      $email = test_input($_POST["email"]);
+      if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
+          $emailErr = "Invalid email format";
+      }
+    }
+
+    if(empty($_POST["uname"])){
+      $lnameErr = "User name is required";
+    }else{
+      $uname = test_input($_POST["uname"]);
+      if(!preg_match("/^[a-zA-Z-' ]*$/",$uname)){ 
+        $unameErr = "Only letters and whitespace allowed";
+      }
+    }
+
+    if(empty($_POST["password"])){
+      $passwordErr = "Password is required";
+    }else{
+      $password = test_input($_POST["password"]);
+    }
        
     $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
 
@@ -116,7 +121,7 @@ if(isset($_POST["username"]) && !empty($_POST["username"])
     $db_obj->close();
    # header('Refresh: 1; URL =register.php');
 }
-
+  include 'webstructure/head.php';
 ?>
 
     <title>Registration</title>

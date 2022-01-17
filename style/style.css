@@ -12,7 +12,9 @@
     margin-bottom: 10px;
 }
 
-
+.btn-space{
+    margin:8px;
+}
 /*Forms*/
 .row::after {
     content: "";

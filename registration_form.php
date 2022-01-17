@@ -1,7 +1,7 @@
 <?php
 
-$email=$password=$salutation=$gender=$fname=$lname=$username=$address=$city=$state=$zip=$rememberMe = "";
-$emailErr=$passwordErr=$salutationErr=$genderErr=$fnameErr=$lnameErr=$unameErr=$addressErr=$cityErr=$stateErr=$zipErr=$rememberMeErr = "";
+$email=$password=$salutation=$fname=$lname=$username = "";
+$emailErr=$passwordErr=$salutationErr=$fnameErr=$lnameErr=$unameErr = "";
 
 session_start();
   
@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         //verify the new password
         if (!preg_match("/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\w\W]{4,}$/",$_POST["password"])) {
           $passwordErr="Password is required. <br>
-            Minimum four letters = 1 character and 1 numerical value";
+            Minimum 4 letters = 1 character and 1 numerical value";
         }else{ 
           $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
         }

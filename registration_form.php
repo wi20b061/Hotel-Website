@@ -37,7 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           }
         }
         if(empty($_POST["password"])){
-          $passwordErr = "Password is required. Minimum four letters = 1 character and 1 numerical value";
+          $passwordErr = "Password is required. Minimum 4 letters = 1 character and 1 numerical value";
         }else{
           $password = test_input($_POST["password"]);
         }
@@ -59,7 +59,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         }
         if(empty($_POST["username"])){
-            $lnameErr = "User name is required";
+            $unameErr = "User name is required";
           }else{
             $username = test_input($_POST["username"]);
             if(!preg_match("/^[a-zA-Z-' ]*$/",$username)){ 
@@ -75,8 +75,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT); 
         }
             
-
-    $db_obj = new mysqli($host, $user, $password, $database);
 
     //question marks (?) are parameters used for later variables bindings. $sql is like a template
     $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname` ) VALUES (?, ?, ?, ?, ?, ?)";
@@ -166,7 +164,7 @@ function test_input($data){
             <div class="form-group col-md-6">
                 <label for="inputPassword4">Password</label>
                 <span class="error">* <?php echo $passwordErr;?></span>
-                <input type="password" name="password" class="form-control" id="inputPassword4" placeholder="Password" value="<?php echo $password;?>">
+                <input type="password" name="password" class="form-control" id="inputPassword4" value="<?php echo $password;?>">
             </div>
         </div>
         <div class="form-group">
@@ -184,6 +182,7 @@ function test_input($data){
           </div>
           <div class="form-group col-md-6">
             <label for="username">Username</label>
+            <span class="error">* <?php echo $unameErr;?></span>
             <input type="text" class="form-control" name="username" id="username" placeholder="Didi" value="<?php echo $username;?>">
           </div>
           

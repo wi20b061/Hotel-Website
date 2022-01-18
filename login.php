@@ -33,7 +33,7 @@
             $loginErr = "Username or Password was not set.";
         }else{
             $username = test_input($_POST["username"]);
-            $password = test_input($_POST["password"]);
+            $password = htmlspecialchars($_POST["password"]);
             //$password = password_hash($password, PASSWORD_DEFAULT);
 
             $sql = "SELECT `userID`  FROM `user` WHERE `username` = ? AND `password`= ?";
@@ -46,6 +46,7 @@
             
             $stmt ->bind_result($userID);
             $stmt->fetch();
+            
 
             if(empty($userID)){
                 $loginErr = "Username or Password was not correct.";
@@ -53,10 +54,26 @@
                 $_SESSION["userID"] = $userID;
                 $_SESSION["username"] = $username;
                 $_SESSION["loggedin"] = true;
-            }
+                //close the statement
+                $stmt->close();
+            
+                $sql = "SELECT `roleID`  FROM `user` WHERE `userID` = ?";
+                //use prepare function
+                $stmt = $db_obj->prepare($sql);
+                //followed by the variables which will be bound to the parameters
+                $stmt-> bind_param("i", $userID);
+                //execute statement
+                $stmt->execute();
+                
+                $stmt ->bind_result($userrole);
+                $stmt->fetch();
 
-            //close the statement
-            $stmt->close();
+                $_SESSION["userrole"] = $userrole;
+                echo $_SESSION["userrole"];
+                //close the statement
+                $stmt->close();
+            }
+            
             //close the connection
             $db_obj->close();
         }

@@ -3,8 +3,6 @@
         session_start();
     }    
 ?>
-
-
     <div class="container-flex">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #98c0dd;">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,11 +38,11 @@
 
                   
                     <?php   #admin =1      # Different Menu for different Userrole
-                     $_SESSION["userrole"] = 2; #simulation without DB
+                     //$_SESSION["userrole"] = 2; #simulation without DB
                     
                  #   $_SESSION["userrole"] = userrole; #sollte mit DB funktionieren
 
-                 if($_SESSION["userrole"] == 1 ): ?> 
+                 if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1 ): ?> 
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

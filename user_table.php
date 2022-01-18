@@ -6,14 +6,15 @@
 
 </head>
 <body>
+    <br>
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-8 text-center">
                  <h1>All users</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-2"></div>
+            <div class="col-6"></div>
                 <div class="col-8">
                     <table class="table">
                         <thead>
@@ -30,22 +31,17 @@
                         </thead>
                         <tbody>
 
-
                         <?php
                             require_once('dbaccess.php');
-
                             $db_obj = new mysqli($host, $user, $password, $database);
                             if ($db_obj->connect_error) {
                                 echo "Collection failed!";
                                 exit();
-
                             }
-
                             $sql = "SELECT user.userID, user.salutation, user.fname, 
                             user.lname, user.username, 
                             user.email, user.active, userrole.role FROM user
-                           INNER JOIN userrole ON user.roleID=userrole.roleID;";
-
+                            INNER JOIN userrole ON user.roleID=userrole.roleID;";
 
                             $stmt = $db_obj->prepare($sql);
 
@@ -64,9 +60,10 @@
                                 echo "<td>" . $active . "</td>";
                                 echo "<td>" . $roleID . "</td>";
                                 echo "<td><a href= 'editData.php?userID= " . $userID . " 'class='btn btn-primary'>Update</a></td>";
+                                echo "<td><a href= 'editData.php?userID= " . $userID . " 'class='btn btn-primary'>Update</a></td>";
                                 echo "<tr>";
-
                             }
+                            //?????????????
                         ?>
                         </tbody>
                     </table>

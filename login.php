@@ -19,7 +19,6 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-
         //DB connection
         require_once ('dbaccess.php');
         $db_obj = new mysqli($host, $user, $password, $database);
@@ -36,7 +35,7 @@
             $password = htmlspecialchars($_POST["password"]);
             //$password = password_hash($password, PASSWORD_DEFAULT);
 
-            $sql = "SELECT `userID`  FROM `user` WHERE `username` = ? AND `password`= ?";
+            $sql = "SELECT `userID`  FROM `user` WHERE `username` = ? AND `password`= ? AND `active`= 1";
             //use prepare function
             $stmt = $db_obj->prepare($sql);
             //followed by the variables which will be bound to the parameters
@@ -49,7 +48,7 @@
             
 
             if(empty($userID)){
-                $loginErr = "Username or Password was not correct.";
+                $loginErr = "Username or Password was not correct.<br> Or your account was deactivated.";
             }else{
                 $_SESSION["userID"] = $userID;
                 $_SESSION["username"] = $username;
@@ -99,12 +98,12 @@
     <br>
     <div class="container">
         <?php if(!isset($_SESSION["userID"]) && !$_SESSION["loggedin"]): ?>
-            <h1 class="page-header">Login</h1>
+            <h1 class=" page-header text-light">Login</h1>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label class="text-light" for="username">Username</label>
                     <input type="text" id="username" name="username" class="form-control"><br>
-                    <label for="password">Password</label>
+                    <label class="text-light" for="password">Password</label>
                     <input type="password" id="password" name="password" class="form-control">
                 </div>
                 <span class="error"><?php echo $loginErr;?></span>
@@ -112,8 +111,8 @@
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
         <?php else:?>
-            <h2>Hello, <?php echo $_SESSION["username"]?>!</h2>
-                <div>
+            <h2 class="text-light">Hello, <?php echo $_SESSION["username"]?>!</h2>
+                <div class="text-light">
                     Push the button "Logout" to logout from your profil.
                 </div><br>
             

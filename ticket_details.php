@@ -17,6 +17,7 @@
                 <div class="col-8">
 
                     <?php
+                    //connect to DB
                         require_once('dbaccess.php');
 
                         $db_obj = new mysqli($host, $user, $password, $database);
@@ -26,6 +27,7 @@
 
                         }
 
+                        //get Ticket ID and create query
                         $ticketID = $_GET['ticketID'];
 
                         $sql = "SELECT ticket.ticketID, ticket.title, ticket.comment, ticket.text, ticket.img, 
@@ -33,9 +35,11 @@
                         INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID WHERE ticketID = ? ;";
 
 
+                        //use prepared stmt
                         $stmt = $db_obj->prepare($sql);
                         $stmt->bind_param('i',$ticketID);
 
+                         //execute stmt
                         $stmt->execute();
                         $stmt ->bind_result($ticketID, $title, $comment, $text, $img,
                         $timestamp, $statusID);
@@ -49,7 +53,7 @@
                         <div class="class">
                             <div class="class-header">
                                 <?php echo $statusID?>
-                            </div>
+                            </div>  
                             <img src="<?php echo $img ?>" class="card-img-top" alt="Ticket image">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>

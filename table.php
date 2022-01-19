@@ -89,13 +89,8 @@
                         <div class="row">
                             <div class="col-12 text-center">
 
-                                          <!--  <select autocomplete="off" id="status" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search data">
-                                            <option  <\?php if ($status=="open") {echo "selected"; }?> value="1" >open</option>
-                                            <option  <\?php if ($status=="closed.failed") {echo "selected"; }?> value="3">closed.failed</option>
-                                            <option  <\?php if ($status=="closed.success") {echo "selected"; }?> value="2" >closed.success</option>
-                                            
-                                            </select>-->
-                                         
+                               <h5> Status Types: open | closed.failed | closed.success </h5><br>
+                                <!--Search-->                                     
                                 <form action="" method="GET">
                                     <div class="input-group mb-3">
                                         <input type="text" name="search" required value="<?php if(isset($_GET['search'])){echo $_GET['search']; } ?>" class="form-control" placeholder="Search data">
@@ -142,19 +137,21 @@
 
                                         $filtervalues = "%" . $_GET['search'] . "%";
                                         
-                                       # $status = intval($_GET['search']);
-
+                                       # search Abfrage
                                         $sql = "SELECT ticket.ticketID, ticket.title, ticket.comment, ticket.text, ticket.img, 
                                         ticket.timestamp,ticketstatus.tstatus FROM ticket
                                         INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID WHERE ticketstatus.tstatus LIKE ? "; 
 
+                                       #use prepared stmt
                                         $stmt = $db_obj->prepare($sql);
                                        $stmt->bind_param("s", $filtervalues);
                                     
+                                       #exectute stmt
                                         $stmt->execute();
                                         $stmt ->bind_result($ticketID, $title, $comment, $text, $img, 
                                         $timestamp, $statusID);
 
+                                       #result
                                         while ($stmt->fetch()) {
                                             echo "<tr>";
                                             echo "<td>" . $ticketID . "</td>";

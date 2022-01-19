@@ -15,6 +15,7 @@
         <div class="row">
             <div class="col-2"></div>
                 <div class="col-8">
+                   <!--table head -->
                     <table class="table">
                         <thead>
                             <tr>
@@ -32,6 +33,7 @@
 
 
                         <?php
+                           #db access 
                             require_once('dbaccess.php');
 
                             $db_obj = new mysqli($host, $user, $password, $database);
@@ -47,21 +49,21 @@
                             
                             $userID = $_SESSION['userID']; # read userID from Session
 
-
+                           //DB SQL Abfrage
                             $sql = "SELECT ticket.ticketID, ticket.title, ticket.comment, ticket.text, ticket.img, 
                             ticket.timestamp,ticketstatus.tstatus FROM ticket 
                            INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID
                            WHERE ticket.creatorID = $userID";
 
-
+                           //use prepare function
                             $stmt = $db_obj->prepare($sql);
-
                            
-
+                            //execute statement
                             $stmt->execute();
                             $stmt ->bind_result($ticketID, $title, $comment, $text, $img, 
                             $timestamp, $statusID);
-
+                           
+                           //show data
                             while ($stmt->fetch()) {
                                 echo "<tr>";
                                 echo "<td>" . $ticketID . "</td>";

@@ -183,7 +183,7 @@
         <?php endif; ?> 
 
         <button type='submit' name='submit' class='btn btn-primary' value="id"> Update </button><br><br>
-        <a class="btn btn-primary" href="changepw.php">Change password</a>
+        <a class="btn btn-primary" href="changePw.php?userID= <?php echo $_GET["userID"]; ?>" >Change password</a>
       </form>
       <br>
       <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1): ?>

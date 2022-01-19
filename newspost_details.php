@@ -84,7 +84,8 @@
                 <input  class="form-control" name="text" type="text" id="text" placeholder="Text" value="<?php echo $text; ?>"><br>
                 <input type="hidden" value= "<?php echo $newsPostID ; ?>" name="newsPostID"></input>
             </div>
-            <button type='submit' name='submit' class='btn btn-primary' value="id">Update</button>
+            <button type='submit' name='submit' class='btn btn-primary' value="id">Update</button><br><br>
+            <a class="btn btn-info" href="news_table.php">Go back</a>
         </form>
         <br><br><br>
         <a class="btn btn-danger" href='delete_newspost.php?newsPostID=<?php echo $newsPostID;?>&delete=true'>Delete Post!</a>

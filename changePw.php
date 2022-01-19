@@ -4,11 +4,9 @@
 ?>
 
  <?php
-
     if(session_status() == PHP_SESSION_NONE){
         session_start();
     }
-
 
     //connect with DB
     require_once('dbaccess.php');
@@ -16,26 +14,20 @@
     $db_obj = new mysqli($host, $user, $password, $database);
     if ($db_obj->connect_error) {
         echo "Collection failed!";
-        exit();}
+        exit();
+    }
 ?>
 
 <?php
-     //update in DB
-     if(isset($_POST["passwordNew"]) && !empty($_POST["passwordNew"]) && isset($_GET["userID"]) && !empty($_GET["userID"])) { 
-
-
-        
+    //update in DB
+    if(isset($_POST["passwordNew"]) && !empty($_POST["passwordNew"]) && isset($_GET["userID"]) && !empty($_GET["userID"]) && isset($_SESSION["userID"])) { 
         //get pw from db
-        
-        $userID = '7'; #intval($_POST['userID']);
-        #$userID = $_SESSION['userID'];  read userID from Session
+        //$userID = '7'; #intval($_POST['userID']);
+        $userID = $_SESSION['userID'];  //read userID from Session
 
         $request = "SELECT user.password FROM user WHERE user.userID = ?";
-
         $stmt = $db_obj->prepare($request);
-
         $stmt->bind_param("s", $pw );
-
         $stmt->execute();
         echo $pw;
 
@@ -45,57 +37,48 @@
         //change button is selected
         # if (isset($_POST["change"])){
         //old password check
-        if ( password_verify($_POST["passwordOld"], $pw )) {
+        if (password_verify($_POST["passwordOld"], $pw)) {
 
-                    //password confirmation
-                    if ($_POST["passwordNew"] != $_POST["passwordNewB"] ) {
-                        echo '<div class="alert alert-danger alert-dismissible">The password is not the same!</div>';
-                    }
-                    //verify the new password
-                    if (!preg_match("/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\w\W]{4,}$/",$_POST["passwordNew"])) {
-                        echo '<div class="alert alert-danger alert-dismissible">Minimum four letters = 1 character and 1 numerical value</div>';
-                        $err=true;
-                    }
-                    else{
-                        // the password is protected in form of hash output
-                        $hash = password_hash($_POST["passwordNew"], PASSWORD_BCRYPT);
+            //password confirmation
+            if ($_POST["passwordNew"] != $_POST["passwordNewB"] ) {
+                echo '<div class="alert alert-danger alert-dismissible">The password is not the same!</div>';
+            }
+            //verify the new password
+            /*if (!preg_match("/^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/",$_POST["passwordNew"])) {
+                echo '<div class="alert alert-danger alert-dismissible">Minimum four letters = 1 character and 1 numerical value</div>';
+                $err=true;
+            }
+            else{*/
+                // the password is protected in form of hash output
+                $hash = password_hash($_POST["passwordNew"], PASSWORD_BCRYPT);
 
                 $userID = intval($_GET['userID']);
-            
                 $sql = "UPDATE `user` SET `password`=?  WHERE `userID`=?";   
             
                 # $password = $_POST["passwordNew"];
                 
                 //use prepare function
-                    $stmt = $db_obj->prepare($sql);
-                    $stmt->bind_param("si", $hash, $userID );
-                
-                    //executes the statement
-                    $stmt->execute();
+                $stmt = $db_obj->prepare($sql);
+                $stmt->bind_param("si", $hash, $userID );
+                //executes the statement
+                $stmt->execute();
 
-                    if ($stmt->execute()) {
-                        header('Location: register.php');
-                        die();
-                        }
-            else {
-                echo '<div class="alert alert-danger alert-dismissible">The old password is not the same!</div>';
-            echo "Try again";
-            
-            }
-            
-        //close the statement
-        $stmt->close();
-    
-        //close the connection
-        $db_obj->close();
-
+                if ($stmt->execute()) {
+                    header('Location: register.php');
+                    die();
+                }else{
+                    echo '<div class="alert alert-danger alert-dismissible">The old password is not the same!</div>';
+                    echo "Try again";
+                }  
+                //close the statement
+                $stmt->close();
+                //close the connection
+                $db_obj->close();
+            //}
+        }else{
+            $error ="Try again";
+            die("Old passwort is wrong");
         }
-     }
-
-     else{
-         $error ="Try again";
-         die("Old passwort is wrong");
-     }
     }
 ?>
 

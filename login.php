@@ -5,16 +5,13 @@
 
     $loginErr = "";
 
-    //falls sich jemand ausloggt, wird "loggedin" auf false gesetzt und die userID aus der Session gelöscht
+    //falls sich jemand ausloggt, wird die userID aus der Session gelöscht
     if(isset($_GET['logout']) && $_GET['logout'] == 'true'){
         unset($_SESSION['userID']);
-        $_SESSION["loggedin"] = false;
+        unset($_SESSION["userrole"]);
+        unset($_SESSION["username"]);
         header('Location: login.php');
         die();
-    }
-    //als default ist "loggedin" auf false gesetzt
-    if(!isset($_SESSION["loggedin"])){
-        $_SESSION["loggedin"] = false;
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -33,8 +30,45 @@
         }else{
             $username = test_input($_POST["username"]);
             $password = htmlspecialchars($_POST["password"]);
-            //$password = password_hash($password, PASSWORD_DEFAULT);
+            
+            $sql = "SELECT `password`, `userID`, `roleID` FROM `user` WHERE `username` = ? AND `active`= 1";
 
+            //use prepare function
+            $stmt = $db_obj->prepare($sql);
+            //followed by the variables which will be bound to the parameters
+            $stmt-> bind_param("s", $username);
+            //execute statement
+            $stmt->execute();
+            
+            $stmt ->bind_result($passwordDB, $userID, $userrole);
+            $stmt->fetch();
+
+            if(!empty($passwordDB) && password_verify($_POST["password"], $passwordDB)){
+                $_SESSION["userID"] = $userID;
+                $_SESSION["username"] = $username;
+                $_SESSION["userrole"] = $userrole;
+                //close the statement
+                $stmt->close();
+            
+                /*$sql = "SELECT `roleID`  FROM `user` WHERE `userID` = ?";
+                //use prepare function
+                $stmt = $db_obj->prepare($sql);
+                //followed by the variables which will be bound to the parameters
+                $stmt-> bind_param("i", $userID);
+                //execute statement
+                $stmt->execute();
+                
+                $stmt ->bind_result($userrole);
+                $stmt->fetch();
+
+                $_SESSION["userrole"] = $userrole;
+                //close the statement
+                $stmt->close();*/
+            }else{
+                $loginErr = "Username or Password was not correct.<br> Or your account was deactivated.";
+            }
+
+            /*//$password = password_hash($password, PASSWORD_DEFAULT);
             $sql = "SELECT `userID`  FROM `user` WHERE `username` = ? AND `password`= ? AND `active`= 1";
             //use prepare function
             $stmt = $db_obj->prepare($sql);
@@ -52,7 +86,6 @@
             }else{
                 $_SESSION["userID"] = $userID;
                 $_SESSION["username"] = $username;
-                $_SESSION["loggedin"] = true;
                 //close the statement
                 $stmt->close();
             
@@ -71,7 +104,7 @@
                 echo $_SESSION["userrole"];
                 //close the statement
                 $stmt->close();
-            }
+            }*/
             
             //close the connection
             $db_obj->close();
@@ -97,7 +130,7 @@
   ?>
     <br>
     <div class="container">
-        <?php if(!isset($_SESSION["userID"]) && !$_SESSION["loggedin"]): ?>
+        <?php if(!isset($_SESSION["userID"])): ?>
             <h1 class=" page-header text-light">Login</h1>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="form-group">

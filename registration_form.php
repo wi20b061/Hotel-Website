@@ -1,11 +1,10 @@
 <?php
   $email=$password=$salutation=$fname=$lname=$username=$usertype=$exists = "";
-  $emailErr=$passwordErr=$salutationErr=$fnameErr=$lnameErr=$unameErr = "";
+  $emailErr=$passwordErr=$fnameErr=$lnameErr=$unameErr = "";
 
   if(session_status() == PHP_SESSION_NONE){
     session_start();
-  }    
-  echo $_SESSION["userrole"];
+  }
 
   include 'webstructure/head.php';
 
@@ -25,6 +24,8 @@
         $email = test_input($_POST["email"]);
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){ 
             $emailErr = "Invalid email format";
+        }else{
+          $emailErr="";
         }
       }
             
@@ -33,32 +34,40 @@
       }else{
         $fname = test_input($_POST["fname"]);
         if(!preg_match("/^[a-zA-Z-' ]*$/",$fname)){ 
-          $nameErr = "Only letters and whitespace allowed";
+          $fnameErr = "Only letters and whitespace allowed";
+        }else{
+          $fnameErr="";
         }
       }
+
       if(empty($_POST["lname"])){
         $lnameErr = "Last name is required";
       }else{
         $lname = test_input($_POST["lname"]);
         if(!preg_match("/^[a-zA-Z-' ]*$/",$lname)){ 
-          $nameErr = "Only letters and whitespace allowed";
+          $lnameErr = "Only letters and whitespace allowed";
+        }else{
+          $lnameErr="";
         }
       }
+
       if(empty($_POST["username"])){
           $unameErr = "User name is required";
       }else{
         $username = test_input($_POST["username"]);
         if(!preg_match("/^[a-zA-Z0-9']*$/",$username)){ 
           $unameErr = "Only letters and numbers are allowed";
+        }else{
+          $unameErr="";
         }
       }
-        
-      if (empty($_POST["password"]) || !preg_match("/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d\w\W]{4,}$/",$_POST["password"])) {
-        $passwordErr="Password is required. <br>
-        Minimum 4 letters = 1 character and 1 numerical value";
+      var_dump($_POST["password"]);
+      if(empty($_POST["password"])){ //|| !preg_match("/^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/",$_POST["password"])) {
+        $passwordErr="Password is required.";
       }else{ 
         $password = htmlspecialchars($_POST["password"]);
         $password = password_hash($password, PASSWORD_DEFAULT); 
+        $passwordErr="";
       }
       
       //testen ob username schon in der DB vorhanden ist
@@ -79,16 +88,21 @@
       if(!empty($exists)){
         $unameErr = "This username already exists!";
       }
-      if($_POST["userType"] == "Normal User"){
-        $usertype = 3;
-      }else{
-        $usertype = 2;
+      $usertype = 3;
+      if(isset($_SESSION["userID"]) && $_SESSION["userID"] == 1){
+        if($_POST["userType"] == "Normal User"){
+          $usertype = 3;
+        }else{
+          $usertype = 2;
+        }
       }
 
-      if(!empty($email) && !empty($fname)
+      /*if(!empty($email) && !empty($fname)
         && !empty($lname) && !empty($password)
-        && !empty($username) && empty($exists)){
-        
+        && !empty($username) && empty($exists)){*/
+      if(empty($exists) && $emailErr== "" && $passwordErr=="" &&
+      $fnameErr=="" && $lnameErr=="" && $unameErr==""){
+          
         //Einlesen in die DB
         //question marks (?) are parameters used for later variables bindings. $sql is like a template
         $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname`, `roleID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -100,26 +114,21 @@
         $stmt-> bind_param("ssssssi", $salutation, $username, $password, $email, $lname, $fname, $usertype);
 
         $salutation = $_POST["salutation"];
-        if($_POST["salutation"] == "Choose..."){
-          $salutation = "";
-        }
-
         //executes the statement
-        $stmt->execute();
-
+        if($stmt->execute()){
+          //Sollte hier ein Admin arbeiten, andere Paramter anzeigen
+          if($_SESSION["userrole"] == 1 && $usertype == 2){
+            header("Location: register_success.php?user=service&admin=t");
+          }else if($_SESSION["userrole"] == 1 && $usertype == 3){
+            header("Location: register_success.php?user=guest&admin=t");
+          }else{
+            header("Location: register_success.php?user=guest&admin=f");
+          }
+        }
         //close the statement
         $stmt->close();
         //close the connection
         $db_obj->close();
-
-        //Sollte hier ein Admin arbeiten, andere Paramter anzeigen
-        if($_SESSION["userrole"] == 1 && $usertype == 2){
-          header("Location: register_success.php?user=service&admin=t");
-        }else if($_SESSION["userrole"] == 1 && $usertype == 3){
-          header("Location: register_success.php?user=guest&admin=t");
-        }else{
-          header("Location: register_success.php?user=guest&admin=f");
-        }
       }
   }
   function test_input($data){
@@ -185,7 +194,7 @@
           </div>
         </div>
         <!--Ist ein Admin angemelet, ist die Auswahl sichtbar-->
-        <?php if($_SESSION["userrole"] == 1):?>
+        <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?>
           <div class="form-group col-md-4">
             <label for="userType">UserType</label>
             <select id="userType" name="userType" class="form-control" value="<?php echo $usertype;?>">

@@ -7,8 +7,8 @@
   <?php
     include 'webstructure/nav.php';
   ?>
+<div style="background-image: url('./uploads/background.jpg'); min-height:100%;">
     <br>
-    <!--das mit dem offset funktioniert für mobile so nicht!-->
     <div class="container text-center col-sm-6 offset-3 border border-primary alert-secondary rounded"><br>
         <h1 id = "heading-1">Help & Support </h1>
         <br><br>
@@ -30,8 +30,11 @@
             <p> hilfseite@kleinhotel.at </p>
         </div>
     </div>
-    
+    <!--div style="padding-bottom:50%;">
 
+    </div-->
+    
+</div>
 
 <?php
     include 'webstructure/footer.php';

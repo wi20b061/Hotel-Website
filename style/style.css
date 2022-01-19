@@ -17,6 +17,11 @@
     width: 50%;
     padding: 10px;
 }
+
+.background{
+    background-image: url('./uploads/background.jpg'); 
+    min-height:100%;
+}
 .news{
     margin-top: 3%;
     margin-left: 14%;

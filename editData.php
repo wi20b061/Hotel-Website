@@ -162,7 +162,8 @@
       
           <input type="hidden" value= "<?php echo $userID ; ?>" name="userID"></input>
         </div> 
-        <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?> #if userrole is Administrator it is possible to update role and activation status of user
+        <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?> 
+          <!--if userrole is Administrator it is possible to update role and activation status of user-->
           <div class="form-group col-md-3">
             <label for="userType">UserType</label>
             <select id="userType" name="userType" class="form-control">

@@ -98,16 +98,16 @@
 <div class="sickbg container jumbotron">
         <form class="px-4 py-3" method="post" action="#" >
             <div class="form-group">
-                <label for="password1">Password</label>
+                <label for="password1">Password</label> <!--asking for old pw-->
                 <input type="password" name="passwordOld"  class="form-control" id="password1" placeholder="Your Password">
 
             </div>
             <div class="form-group">
-                <label for="password2">New Password</label>
+                <label for="password2">New Password</label> <!--asking for new pw-->
                 <input type="password" name="passwordNew"  class="form-control" id="password2" placeholder="Your new password">
             </div>
             <div class="form-group">
-                <label for="password3">Retype New Password</label>
+                <label for="password3">Retype New Password</label> <!--asking for repeating a new pw-->
                 <input type="password" name="passwordNewB"  class="form-control" id="password3" placeholder="Type in new password again">
             </div>
             <button type="submit" name="change" class="btn btn-primary">Apply Password Changes</button>

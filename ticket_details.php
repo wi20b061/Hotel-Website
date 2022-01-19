@@ -46,7 +46,7 @@
                         <div class="class">
                             <div class="class-header">
                                 <?php echo $statusID?>
-                            </div>  
+                            </div>  <!--Information to the ticket shown-->
                             <img src="<?php echo $img ?>" class="card-img-top" alt="Ticket image">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>
@@ -54,8 +54,10 @@
                                 <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 2):?>
                                 <a href="edit_ticket.php?ticketID=<?php echo $ticketID?>" class="btn btn-primary">Edit</a><br><br>
                                 <?php endif;?>
-                                <a class="btn btn-info" href="
+                                <a class="btn btn-info" href="  
+                                <!--different users have different Links-->
                                 <?php if(isset($_SESSION["userrole"]) && ($_SESSION["userrole"] == 1 || $_SESSION["userrole"] == 2)){
+                                    # different users have different Links
                                     echo "table.php";
                                 }elseif(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 3){
                                     echo "all_tickets_user.php";

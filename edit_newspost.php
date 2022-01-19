@@ -8,8 +8,7 @@
 <body>
     <br>
     <h1 class="text-center">Edit newsposts</h1>
-    <br><br><!--In CSS "schöner" machen!-->
-
+    <br><br>
     <!--filter-->
     <div class="col-12 text-center">
         <h2>Filter by Title</h2>
@@ -28,9 +27,6 @@
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </div>
                                </form>
-                                    </div>
-                                </form>
-
                             </div>
                         </div>
                     </div>
@@ -42,14 +38,15 @@
                     <div class="card-body">
                         <table class="table table-bordered">
                             <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Text</th>
-                            <th scope="col">Image path</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Details</th>
-                            </tr>
+                                <!--Tabellenüberschriften-->
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Text</th>
+                                <th scope="col">Image path</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Details</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <?php 
@@ -60,20 +57,19 @@
                                     if ($db_obj->connect_error) {
                                         echo "Collection failed!";
                                         exit();}
-
+                                    //Suche nach Titeln (oder Teilen davon) von newsposts mit dem SQL Befehl "LIKE"
                                     if(isset($_GET['search']))
                                     {
                                         $filtervalues = "%" . $_GET['search'] . "%";
-                                        
                                         $sql = "SELECT newspost.newsPostID, newspost.title, newspost.text, newspost.img, 
                                         newspost.timestamp FROM newspost WHERE newspost.title LIKE ?";
 
                                         $stmt = $db_obj->prepare($sql);
                                         $stmt->bind_param("s", $filtervalues);
-
                                         $stmt->execute();
                                         $stmt ->bind_result($newsPostID, $title, $text, $img, $timestamp);
-
+                                        
+                                        //Ausgabe der Suchergebnisse
                                         while ($stmt->fetch()) {
                                             echo "<tr>";
                                             echo "<td>" . $newsPostID . "</td>";
@@ -93,7 +89,7 @@
             </div>
         </div>
     </div>
-
+    <!--Tabelle aller Newsposts-->
     <br><br>
     <div class="container">
         <div class="row">
@@ -102,66 +98,52 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2"></div>
-                <div class="col-8">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Text</th>
-                            <th scope="col">Image path</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Details</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Text</th>
+                        <th scope="col">Image path</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php
-                            require_once('dbaccess.php');
+                        require_once('dbaccess.php');
 
-                            $db_obj = new mysqli($host, $user, $password, $database);
-                            if ($db_obj->connect_error) {
-                                echo "Collection failed!";
-                                exit();
+                        $db_obj = new mysqli($host, $user, $password, $database);
+                        if ($db_obj->connect_error) {
+                            echo "Collection failed!";
+                            exit();
+                        }
+                        //Auslesen aller newposts aus der Datenbank
+                        $sql = "SELECT newspost.newsPostID, newspost.title, newspost.text, newspost.img, 
+                        newspost.timestamp FROM newspost ";
+                        $stmt = $db_obj->prepare($sql);
+                        $stmt->execute();
+                        $stmt ->bind_result($newsPostID, $title, $text, $img, $timestamp);
 
-                            }
-
-                            $sql = "SELECT newspost.newsPostID, newspost.title, newspost.text, newspost.img, 
-                            newspost.timestamp FROM newspost ";
-
-
-                            $stmt = $db_obj->prepare($sql);
-
-                            $stmt->execute();
-                            $stmt ->bind_result($newsPostID, $title, $text, $img, $timestamp);
-
-                            while ($stmt->fetch()) {
-                                echo "<tr>";
-                                echo "<td>" . $newsPostID . "</td>";
-                                echo "<td>" . $title . "</td>";
-                                echo "<td>" . $text . "</td>";
-                                echo "<td>" . $img . "</td>";                             
-                                echo "<td>" . $timestamp . "</td>";
-                                echo "<td><a href= 'newspost_details.php?newsPostID= " . $newsPostID . " 'class='btn btn-primary'>Details</a></td>";
-                                echo "<tr>";
-
-                            }
+                        while ($stmt->fetch()) {
+                            echo "<tr>";
+                            echo "<td>" . $newsPostID . "</td>";
+                            echo "<td>" . $title . "</td>";
+                            echo "<td>" . $text . "</td>";
+                            echo "<td>" . $img . "</td>";                             
+                            echo "<td>" . $timestamp . "</td>";
+                            echo "<td><a href= 'newspost_details.php?newsPostID= " . $newsPostID . " 'class='btn btn-primary'>Details</a></td>";
+                            echo "<tr>";
+                        }
                         ?>
-                        </tbody>
-                    </table>
-                </div>
-            <div class="col-2"></div>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-
-    
-<br><br><br>
-
-
+    </div>  
+    <br><br><br>
 </body>
-
 <?php
     include 'webstructure/footer.php';
 ?>

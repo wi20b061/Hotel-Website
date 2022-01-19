@@ -13,10 +13,7 @@
     if(!file_exists($thumbnailDir)) {
         mkdir($thumbnailDir);
     }
-
-    include 'uploads/upload.php';
-
-
+    include 'uploads/upload.php'; //für den Upload der Bilder zuständig
 
     include 'webstructure/head.php';
 ?>
@@ -26,13 +23,11 @@
     <?php
         include 'webstructure/nav.php';
     ?>
-
     <br>
     <div class="container text-center">
         <h1 id = "heading-1">Create a news post</h1>
     </div>
     <br>
-
     <div class="container">
         <form id="newspost" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="col">
@@ -53,11 +48,13 @@
         </form>
         <br>
         <br>
+        <!--Anzeige des neu hochgeladenen Posts-->
         <h3 class="card-title">New upload:</h3><br>
         <div class="card">
             <div class="col">
                 <div class="card-body">
                     <?php
+                    //Abfrage ob dieses Bild bereits für einen Post hochgeladen wurde
                     if(isset($errFileExists)){
                         if($errFileExists){
                             echo '<p class="error">This picture already in the image folder!<br>Please try again.</p>';
@@ -72,7 +69,7 @@
                                 echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"';   
                             }
                         }
-                        //This is for showing all thumbnails in the directory
+                        //Hier werden, zur Orientierung, alle Bildnamen von bereits hochgeladenen Bildern angeführt
                         if(file_exists($thumbnailDir) && !$success){
                             echo "<strong>Picutres on the Server:</strong>";
                             $files = scandir($thumbnailDir);

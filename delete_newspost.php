@@ -1,7 +1,7 @@
 <?php
     include 'webstructure/head.php';
 ?>
-    <title>Home</title>
+    <title>Delete Newspost</title>
 </head>
 <body>
     <?php
@@ -22,6 +22,7 @@
                 exit();
             }
 
+            //gewählten Newspost aus der Datenbank löschen
             $newsPostID = $_GET["newsPostID"];
             $sql = "DELETE FROM newspost WHERE newsPostID = $newsPostID";
             $db_obj->query($sql);

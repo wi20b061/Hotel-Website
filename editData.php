@@ -7,7 +7,7 @@
   $emailErr=$fnameErr=$lnameErr= "";
   $email=$salutation=$fname=$lname=$username=$usertype= "";
   
-  //conn with DB
+  //connection with DB
   require_once('dbaccess.php');
 
   $db_obj = new mysqli($host, $user, $password, $database);
@@ -17,8 +17,8 @@
 
   }
 
+  //Abfrage der eigene, gespeicherten Daten in der DB
   if (isset($_GET["userID"]) && !empty(["userID"])) {
-    //sql Abfrage from DB
     $sql = "SELECT user.fname, user.lname, user.email, user.username, 
     user.salutation, user.active, user.roleID FROM user WHERE userID = ? ;";
 
@@ -38,7 +38,7 @@
 
 
   if($_SERVER["REQUEST_METHOD"] == "POST"){ 
-    //validation
+      //validation ob alle Bedingungen erfüllt sind, geg. ein Error
       if(empty($_POST["email"])){
         $emailErr = "Email is required";
       }else{
@@ -67,7 +67,7 @@
     //update in DB
     if(!empty($_POST["userID"]) && !empty($_POST["fname"])
     && !empty($_POST["lname"]) && !empty($_POST["email"])) {
-      
+      //Usertyp umschreiben auf roleID
       if($_POST["userType"] == "Admin"){
         $usertype = 1;
       }else if($_POST["userType"] == "Normal User"){
@@ -75,12 +75,14 @@
       }else{
         $usertype = 2;
       }
+      //Activation umschreiben auf 0 oder 1
       if($_POST["activation"] == "Activated"){
         $activation = 1;
       }else{
         $activation = 0;
       }
       $userID = intval($_POST["userID"]);
+      //User in der Datenbank aktualisieren
       $sql = "UPDATE `user` SET `salutation`= ?, `email`= ?, `fname`= ?, `lname`= ?, `roleID`= ? ,`active`= ?  WHERE `userID`= ? ";    
       
       $lname = $_POST["lname"];
@@ -124,14 +126,13 @@
 
 
   <div class=container>
-
     <div class="sickbg container jumbotron">
       <form name="kiki" action="#" method="post"> 
       
         <div class="form-group col-md-4">
           <label for="salutation">Salutation</label>
           <select autocomplete="off" id="salutation" name="salutation" class="form-control" value="<?php echo $salutation;?>">
-            <!--shows actuall salutation, if there is one, if not - first option will be shown-->
+            <!--shows current salutation -->
             <option  <?php if ($salutation=="Mrs.") {echo "selected"; }?>>Mrs.</option>
             <option  <?php if ($salutation=="Ms.") {echo "selected"; }?>>Ms.</option>
             <option  <?php if ($salutation=="Mr.") {echo "selected"; }?>>Mr.</option>
@@ -163,7 +164,7 @@
           <input type="hidden" value= "<?php echo $userID ; ?>" name="userID"></input>
         </div> 
         <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?> 
-          <!--if userrole is Administrator it is possible to update role and activation status of user-->
+          <!--If a Administrator is logged in, it is possible to update userrole and activation status of other user-->
           <div class="form-group col-md-3">
             <label for="userType">UserType</label>
             <select id="userType" name="userType" class="form-control">

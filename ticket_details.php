@@ -51,6 +51,7 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp ?></h6>
+                                <span class="card-subtitle mb-2 text-muted"><?php echo $text ?></span><br>
                                 <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 2):?>
                                 <a href="edit_ticket.php?ticketID=<?php echo $ticketID?>" class="btn btn-primary">Edit</a><br><br>
                                 <?php endif;?>

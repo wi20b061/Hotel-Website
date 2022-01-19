@@ -9,7 +9,7 @@
     include 'webstructure/nav.php';
   ?>
 <div style="background-image: url('uploads/background.jpg');">
-<br>
+<br><!--Imprint of the hotel-->
     <div class="container text-center">
       <div class="row">
         <div class="col-8 offset-2 border border-primary alert-secondary rounded">

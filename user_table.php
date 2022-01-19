@@ -6,6 +6,7 @@
 
 </head>
 <body>
+    <!--Eine Übersicht aller User mit der Möglichkeit diese zu Filtern oder zum bearbeiten in einer Detailansicht anzuzeigen-->
     <br>
     <div class="container">
         <div class="row">
@@ -37,7 +38,6 @@
                             echo "Collection failed!";
                             exit();
                         }
-                   
                         #create query
                         $sql = "SELECT user.userID, user.salutation, user.fname, 
                         user.lname, user.username, 
@@ -46,10 +46,8 @@
 
                         #use prepared stmt
                         $stmt = $db_obj->prepare($sql);
-
                         #exectute stmt
                         $stmt->execute();
-                   
                         $stmt ->bind_result($userID, $salutation, $fname, $lname, $username, 
                         $email, $active, $roleID);
 
@@ -68,15 +66,12 @@
                             //echo "<td><a href= 'editData.php?userID=" . $userID . " 'class='btn btn-primary'>Update</a></td>";
                             echo "</tr>";
                         }
-                        
                     ?>
                 </tbody>
             </table>
         </div>
     </div>
-
 </body>
-
 <?php
     include 'webstructure/footer.php';
 ?>

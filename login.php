@@ -124,7 +124,7 @@
     <title>Login</title>
 </head>
 <body>
-<div style="background-image: url('uploads/background.jpg');">
+<div style="background-image: url('uploads/background.jpg'); padding-bottom:5%">
   <?php
     include 'webstructure/nav.php';
   ?>

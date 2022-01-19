@@ -9,7 +9,7 @@
   ?>
 <div style="background-image: url('./uploads/background.jpg'); min-height:100%;">
     <br>
-    <div class="container text-center col-sm-6 offset-3 border border-primary alert-secondary rounded"><br>
+    <div class="container text-center col-6 offset-3 border border-primary alert-secondary rounded"><br>
         <h1 id = "heading-1">Help & Support </h1>
         <br><br>
         <h3> User instructions </h3>
@@ -30,10 +30,6 @@
             <p> hilfseite@kleinhotel.at </p>
         </div>
     </div>
-    <!--div style="padding-bottom:50%;">
-
-    </div-->
-    
 </div>
 
 <?php

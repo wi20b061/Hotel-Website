@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./helpsite.php">Help<!--span class="sr-only">(current)</span--></a>
                 </li>
-                <?php if(!isset($_SESSION["loggedin"])): ?>
+                <?php if(!isset($_SESSION["userID"])): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="./registration_form.php">Registration</a>
                 </li>

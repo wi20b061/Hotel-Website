@@ -12,7 +12,7 @@
 <br>
     <div class="container text-center">
       <div class="row">
-        <div class="col-sm-8 offset-2 border border-primary alert-secondary rounded">
+        <div class="col-8 offset-2 border border-primary alert-secondary rounded">
           <h1 class="page-header">Imprint <br> <small> Vienna City Hotel </small></h1>
             <img src="./img/hotel-image.jpg" class="rounded mx-auto d-block" alt="Hotel Building from outside" width="200">
               <p class="text-center">
@@ -34,10 +34,10 @@
               <img src="./img/nadiia.jpg" class="rounded mx-auto d-block" alt="Nadiia Goncharenko" width="200">
               <br>
               <h3> Fiona Kumhofer </h3>
-              <img src="./img/fiona.jpg" class="rounded mx-auto d-block" alt="Fiona Kumhofer" width="200">
+              <img src="./img/fiona.jpg" class="rounded mx-auto d-block" alt="Fiona Kumhofer" width="200"><br>
           </div>
         </div>
-      </div>
+      </div><br>
 </div>
     
 <?php

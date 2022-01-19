@@ -6,7 +6,7 @@
     if(!file_exists($uploadDir)) {  //create upload directory if it doesnt exist
         mkdir($uploadDir);
     }
-    $thumbnailDir = "uploads/news/";  //create ordner for thumbnail img
+    $thumbnailDir = "uploads/user/";  //create ordner for thumbnail img
     if(!file_exists($thumbnailDir)) {
         mkdir($thumbnailDir);
     }
@@ -27,23 +27,23 @@
 
     <br>
     <div class="container text-center">
-        <h1 id = "heading-1">Create a news ticket</h1>
+        <h1 id = "heading-1">Create a new ticket</h1>
     </div>
     <br>
 
     <div class="container">
-        <form id="newspost" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
+        <form id="ticket" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="col">
-                <textarea rows="1" cols="20" name="title" form="newspost" class="form-control" id="title" placeholder="News Title" required></textarea>
+                <textarea rows="1" cols="20" name="title" form="ticket" class="form-control" id="title" placeholder="Title" required></textarea>
             </div>
             <div class="col">
-                <textarea rows="4" cols="50" name="text" form="newspost" class="form-control" id="text" placeholder="News Text" required></textarea>
+                <textarea rows="4" cols="50" name="text" form="ticket" class="form-control" id="text" placeholder="Text" required></textarea>
             </div>
             <div class="col">
                 <div class="input-group">
                     <div class="custom-file">
                             <input class="custom-file-input" id="file" aria-describedby="file" type="file" name="file" required accept="image/jpeg, image/png, image/gif">
-                            <label class="custom-file-label" for="file">Choose news image</label>
+                            <label class="custom-file-label" for="file">Choose image</label>
                     </div>
                 </div>
                 <button class="btn btn-outline-secondary" type="submit" name="submit">Publish</button>
@@ -67,7 +67,7 @@
                             $thumbnail = $thumbnailDir."thumbnail-".$fileName;
                             if(isset($thumbnail)){
                                 echo 'Name: ' .$fileName;
-                                echo '<img src="'.$thumbnail.'" alt="newsImage" class="card-img-top"'; //style="width:480px;height:720px">
+                                echo '<img src="'.$thumbnail.'" alt="ticketImage" class="card-img-top"'; //style="width:480px;height:720px">
                                 
                             }
                             /**IDEE**: man könnte alle anzeigen und dann eines auswählen können */

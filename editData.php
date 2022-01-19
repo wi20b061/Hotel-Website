@@ -181,10 +181,13 @@
           </div>
         <?php endif; ?> 
 
-        <button type='submit' name='submit' class='btn btn-primary' value="id"> Update </button>
+        <button type='submit' name='submit' class='btn btn-primary' value="id"> Update </button><br><br>
+        <a class="btn btn-primary" href="changepw.php">Change password</a>
       </form>
       <br>
+      <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1): ?>
       <a class="btn btn-info" href="user_table.php">Go back</a>
+      <?php endif;?>
     </div> 
   </div>
 </body>

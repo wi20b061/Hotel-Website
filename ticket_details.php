@@ -41,7 +41,7 @@
                         $stmt ->bind_result($ticketID, $title, $comment, $text, $img, $timestamp, $statusID);
 
                        $stmt->fetch();
-                        ?>
+                    ?>
 
                         <div class="class">
                             <div class="class-header">
@@ -51,8 +51,16 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp ?></h6>
+                                <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 2):?>
                                 <a href="edit_ticket.php?ticketID=<?php echo $ticketID?>" class="btn btn-primary">Edit</a><br><br>
-                                <a class="btn btn-info" href="table.php">Go back</a>
+                                <?php endif;?>
+                                <a class="btn btn-info" href="
+                                <?php if(isset($_SESSION["userrole"]) && ($_SESSION["userrole"] == 1 || $_SESSION["userrole"] == 2)){
+                                    echo "table.php";
+                                }elseif(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 3){
+                                    echo "all_tickets_user.php";
+                                }?>
+                                ">Go back</a>
                             </div>
                             </div>
                         </div>

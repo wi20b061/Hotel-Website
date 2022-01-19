@@ -17,7 +17,9 @@
   }
 
   if($_SERVER["REQUEST_METHOD"] == "POST"){ 
-    //validation
+      //validation
+      $salutation = test_input($_POST["salutation"]);
+
       if(empty($_POST["email"])){
         $emailErr = "Email is required";
       }else{
@@ -61,7 +63,7 @@
           $unameErr="";
         }
       }
-      var_dump($_POST["password"]);
+
       if(empty($_POST["password"])){ //|| !preg_match("/^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/",$_POST["password"])) {
         $passwordErr="Password is required.";
       }else{ 
@@ -160,11 +162,10 @@
           <div class="form-group col-md-4">
             <label for="salutation">Salutation</label>
             <select id="salutation" name="salutation" class="form-control" value="<?php echo $salutation;?>">
-              <option selected>Choose...</option>
-              <option>Mrs.</option>
-              <option>Mr.</option>
-              <option>Ms.</option>
-              <option>Dr.</option>
+              <option  <?php if ($salutation=="Mrs.") {echo "selected"; }?>>Mrs.</option>
+              <option  <?php if ($salutation=="Ms.") {echo "selected"; }?>>Ms.</option>
+              <option  <?php if ($salutation=="Mr.") {echo "selected"; }?>>Mr.</option>
+              <option  <?php if ($salutation=="Dr.") {echo "selected"; }?>>Dr.</option>
             </select>
           </div>
           <div class="form-group col-md-6">

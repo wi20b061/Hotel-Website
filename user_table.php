@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <table class="table">
-                <thead>
+                <thead> <!--head of the table-->
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Salutation</th>
@@ -31,23 +31,29 @@
                 <tbody>
 
                     <?php
-                        require_once('dbaccess.php');
+                        require_once('dbaccess.php'); #connect to DB
                         $db_obj = new mysqli($host, $user, $password, $database);
                         if ($db_obj->connect_error) {
                             echo "Collection failed!";
                             exit();
                         }
+                   
+                        #create query
                         $sql = "SELECT user.userID, user.salutation, user.fname, 
                         user.lname, user.username, 
                         user.email, user.active, userrole.role FROM user
                         INNER JOIN userrole ON user.roleID=userrole.roleID;";
 
+                        #use prepared stmt
                         $stmt = $db_obj->prepare($sql);
 
+                        #exectute stmt
                         $stmt->execute();
+                   
                         $stmt ->bind_result($userID, $salutation, $fname, $lname, $username, 
                         $email, $active, $roleID);
 
+                        #result output
                         while ($stmt->fetch()) {
                             echo "<tr>";
                             echo "<td>" . $userID . "</td>";
@@ -62,7 +68,7 @@
                             //echo "<td><a href= 'editData.php?userID=" . $userID . " 'class='btn btn-primary'>Update</a></td>";
                             echo "</tr>";
                         }
-                        //?????????????
+                        
                     ?>
                 </tbody>
             </table>

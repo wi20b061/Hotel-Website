@@ -91,21 +91,25 @@
       if(!empty($exists)){
         $unameErr = "This username already exists!";
       }
-      $usertype = 3;
-      if(isset($_SESSION["userID"]) && $_SESSION["userID"] == 1){
-        if($_POST["userType"] == "Normal User"){
-          $usertype = 3;
-        }else{
-          $usertype = 2;
-        }
-      }
+      
+      
 
       /*if(!empty($email) && !empty($fname)
         && !empty($lname) && !empty($password)
         && !empty($username) && empty($exists)){*/
       if(empty($exists) && $emailErr== "" && $passwordErr=="" &&
       $fnameErr=="" && $lnameErr=="" && $unameErr==""){
-          
+
+        if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1){
+          if($_POST["userType"] == "Normal User"){
+            $usertype = 3;
+          }elseif($_POST["userType"]=="Service Engineer"){
+            $usertype = 2;
+          }
+        }else{
+          $usertype = 3;
+        }
+        
         //Einlesen in die DB
         //question marks (?) are parameters used for later variables bindings. $sql is like a template
         $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname`, `roleID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -121,12 +125,14 @@
         if($stmt->execute()){
           //Sollte hier ein Admin arbeiten, andere Paramter anzeigen
           if($_SESSION["userrole"] == 1 && $usertype == 2){
-            header("Location: register_success.php?user=service&admin=t");
+            header("Location: register_success.php?user=service");
           }else if($_SESSION["userrole"] == 1 && $usertype == 3){
-            header("Location: register_success.php?user=guest&admin=t");
+            header("Location: register_success.php?user=guest");
           }else{
-            header("Location: register_success.php?user=guest&admin=f");
+            header("Location: register_success.php?user=guest");
           }
+        }else{
+          echo "Error with DB access";
         }
         //close the statement
         $stmt->close();
@@ -199,9 +205,9 @@
         <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?>
           <div class="form-group col-md-4">
             <label for="userType">UserType</label>
-            <select id="userType" name="userType" class="form-control" value="<?php echo $usertype;?>">
-              <option <?php if ($usertype=="Normal User") {echo "selected"; }?>>Normal User</option>
-              <option <?php if ($usertype=="Service Engineer") {echo "selected"; }?>>Service Engineer</option>
+            <select id="userType" name="userType" class="form-control"><!-- value="<?php //echo $usertype;?>"-->
+              <option <?php if ($usertype==3) {echo "selected"; }?>>Normal User</option>
+              <option <?php if ($usertype==2) {echo "selected"; }?>>Service Engineer</option>
             </select>
           </div>
         <?php endif; ?>

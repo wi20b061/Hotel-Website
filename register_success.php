@@ -5,10 +5,9 @@
 </head>
 <body>
     <?php
-        echo $_SESSION["userrole"];
         include 'webstructure/nav.php';
     ?>
-    <?php  echo $_SESSION["userrole"];
+    <?php 
     if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1 && $_GET["user"] == "service"):?>
     
     <div class="container text-center">

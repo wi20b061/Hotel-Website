@@ -16,27 +16,19 @@
         exit();
     }
 
-    
-
     //update in DB
     if(isset($_POST["title"]) && isset($_POST["text"]) && !empty($_POST["newsPostID"])) {
 
         $newsPostID = intval($_POST['newsPostID']);
-
         $sql = "UPDATE `newspost` SET `title`=?, `text`= ?  WHERE `newsPostID`=?";
 
         $title = $_POST["title"];
         $text = $_POST["text"];
         //use prepare function
         $stmt = $db_obj->prepare($sql);
-        $stmt->bind_param("ssi", $title, $text, $newsPostID );
-
-        //"s" stands for string (string datatype is expected) ... i for integer, d for double
-        //followed by the variables which will be bound to the parameters
-        
+        $stmt->bind_param("ssi", $title, $text, $newsPostID ); //"s" for String, "i" for Integer
         //executes the statement
         $stmt->execute();
-        
         //close the statement
         $stmt->close();
         //close the connection

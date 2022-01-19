@@ -5,7 +5,7 @@
 
     $loginErr = "";
 
-    //falls sich jemand ausloggt, wird die userID aus der Session gelöscht
+    //falls sich jemand ausloggt, werden die gesetzten Userdaten aus der Session gelöscht
     if(isset($_GET['logout']) && $_GET['logout'] == 'true'){
         unset($_SESSION['userID']);
         unset($_SESSION["userrole"]);
@@ -49,68 +49,12 @@
                 $_SESSION["userrole"] = $userrole;
                 //close the statement
                 $stmt->close();
-            
-                /*$sql = "SELECT `roleID`  FROM `user` WHERE `userID` = ?";
-                //use prepare function
-                $stmt = $db_obj->prepare($sql);
-                //followed by the variables which will be bound to the parameters
-                $stmt-> bind_param("i", $userID);
-                //execute statement
-                $stmt->execute();
-                
-                $stmt ->bind_result($userrole);
-                $stmt->fetch();
-
-                $_SESSION["userrole"] = $userrole;
-                //close the statement
-                $stmt->close();*/
             }else{
                 $loginErr = "Username or Password was not correct.<br> Or your account was deactivated.";
             }
-
-            /*//$password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "SELECT `userID`  FROM `user` WHERE `username` = ? AND `password`= ? AND `active`= 1";
-            //use prepare function
-            $stmt = $db_obj->prepare($sql);
-            //followed by the variables which will be bound to the parameters
-            $stmt-> bind_param("ss", $username, $password);
-            //execute statement
-            $stmt->execute();
-            
-            $stmt ->bind_result($userID);
-            $stmt->fetch();
-            
-
-            if(empty($userID)){
-                $loginErr = "Username or Password was not correct.<br> Or your account was deactivated.";
-            }else{
-                $_SESSION["userID"] = $userID;
-                $_SESSION["username"] = $username;
-                //close the statement
-                $stmt->close();
-            
-                $sql = "SELECT `roleID`  FROM `user` WHERE `userID` = ?";
-                //use prepare function
-                $stmt = $db_obj->prepare($sql);
-                //followed by the variables which will be bound to the parameters
-                $stmt-> bind_param("i", $userID);
-                //execute statement
-                $stmt->execute();
-                
-                $stmt ->bind_result($userrole);
-                $stmt->fetch();
-
-                $_SESSION["userrole"] = $userrole;
-                echo $_SESSION["userrole"];
-                //close the statement
-                $stmt->close();
-            }*/
-            
             //close the connection
             $db_obj->close();
         }
-
-    
     }
     function test_input($data){
         $data = trim($data); //unnötige leerzeichen etc entfernen
@@ -118,7 +62,6 @@
         $data = htmlspecialchars($data); //zu htmlspecialchars machen (Security reasons)
         return $data;
     }
-
     include 'webstructure/head.php';
 ?>
     <title>Login</title>
@@ -130,6 +73,7 @@
   ?>
     <br>
     <div class="container">
+        <!--Das Login Formular-->
         <?php if(!isset($_SESSION["userID"])): ?>
             <h1 class=" page-header text-light">Login</h1>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -143,18 +87,16 @@
                 <br>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
+        <!--Die Anzeige für eingeloggte User zum Ausloggen-->
         <?php else:?>
             <h2 class="text-light">Hello, <?php echo $_SESSION["username"]?>!</h2>
                 <div class="text-light">
                     Push the button "Logout" to logout from your profil.
                 </div><br>
-            
-            
             <a class="btn btn-primary" href="?logout=true">Logout</a>
         <?php endif?>
     </div>
 </div>
-    
 <?php
     include 'webstructure/footer.php';
 ?>

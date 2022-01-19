@@ -30,7 +30,6 @@
                         </thead>
                         <tbody>
 
-
                         <?php
                             require_once('dbaccess.php');
 
@@ -38,13 +37,11 @@
                             if ($db_obj->connect_error) {
                                 echo "Collection failed!";
                                 exit();
-
                             }
 
                             $sql = "SELECT ticket.ticketID, ticket.title, ticket.comment, ticket.text, ticket.img, 
                             ticket.timestamp,ticketstatus.tstatus FROM ticket 
                            INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID;";
-
 
                             $stmt = $db_obj->prepare($sql);
 
@@ -71,9 +68,7 @@
                </div>
     </div>
 
-
 <br><br><br>
-
 
 <div class="col-12 text-center">
                  <h2>Filter nach Status</h2>

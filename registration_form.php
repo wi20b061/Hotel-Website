@@ -17,10 +17,13 @@
   }
 
   if($_SERVER["REQUEST_METHOD"] == "POST"){ 
-      //validation
+      
       $salutation = test_input($_POST["salutation"]);
       $usertype = test_input($_POST["userType"]);
 
+      //Validation und Error control der Eingaben:
+      //Prüfung ob notwendige Felder leer sind 
+      //und ob sie den anderen Kriterien gerecht werden
       if(empty($_POST["email"])){
         $emailErr = "Email is required";
       }else{
@@ -64,7 +67,9 @@
           $unameErr="";
         }
       }
-
+      //Das hier auskommentierte Regex, zur Überprüfung von Passwörtern, konnte leider nicht verwendet werden,
+      //da aufgrund eines Fehlers, der auch mit Hilfe anderer erfahreneren Personen leider nicht gefunden werden 
+      //konnte, die Funktionalität nicht gegeben war.
       if(empty($_POST["password"])){ //|| !preg_match("/^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[#?!@$%^&*-]).{8,}$/",$_POST["password"])) {
         $passwordErr="Password is required.";
       }else{ 
@@ -73,15 +78,15 @@
         $passwordErr="";
       }
       
-      //testen ob username schon in der DB vorhanden ist
+      //Testen ob dieser Username schon in der DB vorhanden ist (Username soll eindeutig sein)
       $sql = "SELECT `username` FROM `user` WHERE  `username` = ?";
 
       $stmt = $db_obj->prepare($sql);
       $stmt-> bind_param("s", $username);
       $stmt->execute();
         
-      //exists beinhaltet usernamen die mit dem ausgewählten schon übereinstimmen, 
-      //ist es leer, ist der username noch nicht verwendet
+      //"exists" beinhaltet Usernamen, die mit dem ausgewählten Usernamen übereinstimmen. 
+      //Ist "exists" leer, ist der Username noch nicht in Verwendung und frei zur Wahl.
       $stmt ->bind_result($exists);
       $stmt->fetch();
 
@@ -92,14 +97,10 @@
         $unameErr = "This username already exists!";
       }
       
-      
-
-      /*if(!empty($email) && !empty($fname)
-        && !empty($lname) && !empty($password)
-        && !empty($username) && empty($exists)){*/
+      //Erst wenn alle Fehlermeldungen beseitigt sind, wird zum Einlesen der Daten übergegangen
       if(empty($exists) && $emailErr== "" && $passwordErr=="" &&
       $fnameErr=="" && $lnameErr=="" && $unameErr==""){
-
+        //Usertyp umschreiben auf roleID, falls ein Admin bearbeitet, ansonsten als Default einen Gast anlegen (userrole=3)
         if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1){
           if($_POST["userType"] == "Normal User"){
             $usertype = 3;
@@ -113,17 +114,15 @@
         //Einlesen in die DB
         //question marks (?) are parameters used for later variables bindings. $sql is like a template
         $sql = "INSERT INTO `user` (`salutation`,`username`, `password`, `email`, `lname`,`fname`, `roleID`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         //use prepare function
         $stmt = $db_obj->prepare($sql);
-
         //followed by the variables which will be bound to the parameters
         $stmt-> bind_param("ssssssi", $salutation, $username, $password, $email, $lname, $fname, $usertype);
 
         $salutation = $_POST["salutation"];
         //executes the statement
         if($stmt->execute()){
-          //Sollte hier ein Admin arbeiten, andere Paramter anzeigen
+          //Sollte hier ein Admin arbeiten, mithilfe der URL andere Parameter mitschicken
           if($_SESSION["userrole"] == 1 && $usertype == 2){
             header("Location: register_success.php?user=service");
           }else if($_SESSION["userrole"] == 1 && $usertype == 3){
@@ -157,7 +156,6 @@
     <br>
     <!-- Gäste-Registrierung für das Semesterprojekt. Dieses Formular beinhaltet folgende Felder: 
     E-Mail-Adresse, Anrede (select), Vorname, Nachname, Password, Username-->
-    <!--form action="results.html" method="GET"-->
     <br>
     <h1 class="page-header text-center">User registration</h1><br/>
     <div class="container">
@@ -205,7 +203,7 @@
         <?php if(isset($_SESSION["userrole"]) && $_SESSION["userrole"] == 1):?>
           <div class="form-group col-md-4">
             <label for="userType">UserType</label>
-            <select id="userType" name="userType" class="form-control"><!-- value="<?php //echo $usertype;?>"-->
+            <select id="userType" name="userType" class="form-control">
               <option <?php if ($usertype==3) {echo "selected"; }?>>Normal User</option>
               <option <?php if ($usertype==2) {echo "selected"; }?>>Service Engineer</option>
             </select>

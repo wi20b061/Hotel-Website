@@ -21,8 +21,7 @@
     <?php
         include 'webstructure/nav.php';
 
-        $id = $_SESSION['userID']; # read userID from Session
-
+        $id = $_SESSION['userID']; 
     ?>
 
     <br>
@@ -30,7 +29,7 @@
         <h1 id = "heading-1">Create a new ticket</h1>
     </div>
     <br>
-
+    <!--Hier kann ein neues Ticket erstellt werden-->
     <div class="container">
         <form id="ticket" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" enctype="multipart/form-data">
             <div class="col">
@@ -51,7 +50,7 @@
         </form>
         <br>
         <br>
-        <div class="card"><!--style="width: 18rem;"-->
+        <div class="card">
             <div class="col">
                 <div class="card-body">
                     <h3 class="card-title">New uploaded image:</h3><br>
@@ -67,10 +66,9 @@
                             $thumbnail = $thumbnailDir."thumbnail-".$fileName;
                             if(isset($thumbnail)){
                                 echo 'Name: ' .$fileName;
-                                echo '<img src="'.$thumbnail.'" alt="ticketImage" class="card-img-top"'; //style="width:480px;height:720px">
+                                echo '<img src="'.$thumbnail.'" alt="ticketImage" class="card-img-top"';
                                 
                             }
-                            /**IDEE**: man könnte alle anzeigen und dann eines auswählen können */
                             //This is for showing all thumbnails in the directory
                             if(file_exists($thumbnailDir)){
                                 $files = scandir($thumbnailDir);

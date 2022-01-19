@@ -47,7 +47,7 @@
                         </a>
                         <div class="dropdown-menu" style="background-color: #c2d3df;" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="./newspost.php">Create Newspost</a>
-                            <a class="dropdown-item" href="./news_table.php">All news posts</a>
+                            <a class="dropdown-item" href="./edit_newspost.php">All news posts</a>
                             <a class="dropdown-item" href="./table.php">All tickets</a>
                         </div>
                     </li>

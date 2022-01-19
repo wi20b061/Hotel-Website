@@ -16,15 +16,11 @@
             echo "Connection Error: " . $db_obj->connect_error;
             exit();
         }
+        //Ausgabe der Newsposts in zeitlich absteigender Reihenfolge auslesen
         $sql = "SELECT * from newsPost ORDER BY timestamp DESC";
         $stmt = $db_obj->prepare($sql);
         $stmt->execute();
         $stmt->bind_result($newsPostID, $timestamp, $title, $text, $imgPath);
-
-        /*sort timestamps?
-        $sortedArray = rsort($result);
-        echo "<pre>" . print_r($sortedArray, true) . "</pre>";*/
-
     ?>
 
 <!--Hintergrund Bild-->

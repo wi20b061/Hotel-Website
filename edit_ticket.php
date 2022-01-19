@@ -3,11 +3,13 @@
 
   $tstatusErr=$commentErr= "";
 
+#variablen sind gesetzt
   $status="";
   $comment="";
 ?>
 
 <?php
+#connection to DB
     require_once('dbaccess.php');
 
     $db_obj = new mysqli($host, $user, $password, $database);
@@ -25,6 +27,7 @@
       $sql = "UPDATE `ticket` SET `comment`=?, `statusID`= ?  WHERE `ticketID`=?";     
 
       $comment = $_POST["comment"];
+        
     //use prepare function
     $stmt = $db_obj->prepare($sql);
     $stmt->bind_param("sii", $comment, $statusID, $ticketID );
@@ -53,6 +56,7 @@
 
     $stmt->bind_param("i", $ticketID );
 
+    //executes the statement
     $stmt->execute();
     $stmt ->bind_result( $comment, $status);
 

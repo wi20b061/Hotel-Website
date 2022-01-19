@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2"></div>
+            
                 <div class="col-8">
                     <table class="table">
                         <thead>
@@ -68,9 +68,7 @@
                         ?>
                         </tbody>
                     </table>
-                </div>
-            <div class="col-2"></div>
-        </div>
+               </div>
     </div>
 
 

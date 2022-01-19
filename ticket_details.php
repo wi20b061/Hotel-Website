@@ -1,7 +1,6 @@
 <?php
     include 'webstructure/head.php';
     include 'webstructure/nav.php';
-
 ?>
 
 </head>
@@ -24,7 +23,6 @@
                         if ($db_obj->connect_error) {
                             echo "Collection failed!";
                             exit();
-
                         }
 
                         //get Ticket ID and create query
@@ -34,20 +32,15 @@
                         ticket.timestamp,ticketstatus.tstatus FROM ticket 
                         INNER JOIN ticketstatus ON ticket.statusID=ticketstatus.statusID WHERE ticketID = ? ;";
 
-
                         //use prepared stmt
                         $stmt = $db_obj->prepare($sql);
                         $stmt->bind_param('i',$ticketID);
 
                          //execute stmt
                         $stmt->execute();
-                        $stmt ->bind_result($ticketID, $title, $comment, $text, $img,
-                        $timestamp, $statusID);
+                        $stmt ->bind_result($ticketID, $title, $comment, $text, $img, $timestamp, $statusID);
 
-                       if (!$stmt->fetch()) {
-                           # header("Location: table.php");
-                           # die();
-                        }
+                       $stmt->fetch();
                         ?>
 
                         <div class="class">
@@ -58,16 +51,15 @@
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $title ?></h5>
                                 <h6 class="card-subtitle mb-2 text-muted"><?php echo $timestamp ?></h6>
-                                <a href="edit_ticket.php" class="btn btn-primary">Edit</a>
-                                <a href="table.php" class="btn btn-primary">Overview</a>
+                                <a href="edit_ticket.php?ticketID=<?php echo $ticketID?>" class="btn btn-primary">Edit</a><br><br>
+                                <a class="btn btn-info" href="table.php">Go back</a>
                             </div>
                             </div>
                         </div>
                     <div class="col-2"></div>
                 </div>
             </div>
-
-    </body>
+</body>
 
 <?php
     include 'webstructure/footer.php';

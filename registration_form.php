@@ -19,6 +19,7 @@
   if($_SERVER["REQUEST_METHOD"] == "POST"){ 
       //validation
       $salutation = test_input($_POST["salutation"]);
+      $usertype = test_input($_POST["userType"]);
 
       if(empty($_POST["email"])){
         $emailErr = "Email is required";
@@ -199,8 +200,8 @@
           <div class="form-group col-md-4">
             <label for="userType">UserType</label>
             <select id="userType" name="userType" class="form-control" value="<?php echo $usertype;?>">
-              <option selected>Normal User</option>
-              <option>Service Engineer</option>
+              <option <?php if ($usertype=="Normal User") {echo "selected"; }?>>Normal User</option>
+              <option <?php if ($usertype=="Service Engineer") {echo "selected"; }?>>Service Engineer</option>
             </select>
           </div>
         <?php endif; ?>
